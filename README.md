@@ -1,2 +1,2 @@
-# web_practice
-doing practice for the website to make it more secure and reliable 
+# 100solutionz_web
+website for the 100solutionz company

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Let's Build the Future | 100Solutionz</title>
+    <meta name="description"
+        content="Ready to start your next project? Contact 100Solutionz today for AI solutions, app development, and digital growth.">
+    <meta property="og:title" content="Contact Us | Let's Build the Future | 100Solutionz">
+    <meta property="og:description" content="Ready to start your next project? Drop us a message below.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <header id="navbar" class="scrolled">
+        <div class="container">
+            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">100Solutionz</a></div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html" class="btn-chat active">Let's Chat</a></li>
+                    <li>
+                        <button id="theme-toggle" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="contact-page" class="section" style="padding-top: 150px;">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <h1 class="section-title" style="margin-bottom: 20px;">Get in Touch</h1>
+                    <p style="opacity: 0.7; font-size: 1.2rem;">Ready to start your next project? Drop us a message
+                        below.</p>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="How can we help?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" placeholder="Tell us more about your project..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-cta">
+                <h2>Ready to build the future?</h2>
+                <a href="contact.html" class="btn-large">Start a Project</a>
+            </div>
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/company/100solutionzz/" target="_blank" class="social-icon"
+                        aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank" class="social-icon" aria-label="Facebook"><i
+                            class="fab fa-facebook"></i></a>
+                </div>
+                <p>&copy; 2026 100Solutionz. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
