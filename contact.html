@@ -17,72 +17,94 @@
 </head>
 
 <body>
-    <header id="navbar" class="scrolled">
+
+    <header id="navbar">
         <div class="container">
-            <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">100Solutionz</a></div>
+            <div class="logo">100Solutionz</div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="work.html">Work</a></li>
-                    <li><a href="services.html">Services</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="contact.html" class="btn-chat active">Let's Chat</a></li>
-                    <li>
-                        <button id="theme-toggle" aria-label="Toggle dark mode">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html" class="btn-chat active">Book a Call</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-        <section id="contact-page" class="section" style="padding-top: 150px;">
+    <main style="padding-top: 150px;">
+        <section class="section">
             <div class="container">
-                <div style="text-align: center; margin-bottom: 60px;">
-                    <h1 class="section-title" style="margin-bottom: 20px;">Get in Touch</h1>
-                    <p style="opacity: 0.7; font-size: 1.2rem;">Ready to start your next project? Drop us a message
-                        below.</p>
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <span class="hero-tag">Let's Talk</span>
+                    <h1 style="font-size: 64px; font-weight: 700; line-height: 1; margin-bottom: 30px;">Let's automate
+                        what <br><i style="color: var(--accent-color);">slows you down.</i></h1>
+                    <p style="color: var(--text-muted); font-size: 18px; max-width: 600px; margin: 0 auto;">Tell us what
+                        your team spends time on that a machine should handle. We'll show you what's possible.</p>
                 </div>
 
                 <form class="contact-form">
                     <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Jane Cooper" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                        <label for="email">Work Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="jane@company.io" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" class="form-control" placeholder="How can we help?" required>
+                        <label for="message">How can we help?</label>
+                        <textarea id="message" class="form-control"
+                            placeholder="Tell us about the project or challenge..." required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" class="form-control" placeholder="Tell us more about your project..."
-                            required></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit">Send Message</button>
+                    <button type="submit" class="btn-submit">Submit Request ›</button>
+                    <p style="text-align: center; font-size: 12px; margin-top: 30px; opacity: 0.5;">No commitment
+                        required. 30-minute discovery call.</p>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer id="contact">
+    <footer style="padding: 100px 0 40px; border-top: 1px solid #1a1a1a;">
         <div class="container">
-            <div class="footer-cta">
-                <h2>Ready to build the future?</h2>
-                <a href="contact.html" class="btn-large">Start a Project</a>
-            </div>
-            <div class="footer-bottom">
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/company/100solutionzz/" target="_blank" class="social-icon"
-                        aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank" class="social-icon" aria-label="Facebook"><i
-                            class="fab fa-facebook"></i></a>
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 80px; margin-bottom: 80px;">
+                <div>
+                    <div class="logo" style="margin-bottom: 30px;">100Solutionz</div>
+                    <p style="color: var(--text-muted); max-width: 320px; line-height: 1.8;">
+                        100Solutionz pairs AI automation with elite offshore engineering talent — helping companies
+                        eliminate
+                        repetitive work, scale their teams, and ship faster.
+                    </p>
                 </div>
-                <p>&copy; 2026 100Solutionz. All rights reserved.</p>
+                <div>
+                    <h4
+                        style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5;">
+                        Pages</h4>
+                    <ul style="list-style: none; line-height: 2.5;">
+                        <li><a href="index.html" style="color: #fff; text-decoration: none;">Home</a></li>
+                        <li><a href="about.html" style="color: #fff; text-decoration: none;">About</a></li>
+                        <li><a href="services.html" style="color: #fff; text-decoration: none;">Services</a></li>
+                        <li><a href="work.html" style="color: #fff; text-decoration: none;">Work</a></li>
+                        <li><a href="blog.html" style="color: #fff; text-decoration: none;">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5;">
+                        Ready to start?</h4>
+                    <div style="line-height: 2.5;">
+                        <a href="contact.html" style="color: #fff; text-decoration: none;">Book a Call ›</a><br>
+                        <a href="mailto:hello@100solutionz.com"
+                            style="color: #fff; text-decoration: none;">hello@100solutionz.com</a>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 40px; font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">
+                <div>© 2026 100Solutionz. All rights reserved.</div>
+                <div>Engineered with precision.</div>
             </div>
         </div>
     </footer>

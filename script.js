@@ -46,13 +46,12 @@ if (contactForm) {
         const templateParams = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
             message: document.getElementById('message').value
         };
 
         try {
             await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, templateParams);
-            alert('Your message has been sent successfully!');
+            alert('Your request has been sent! We will book a call with you soon.');
             contactForm.reset();
         } catch (error) {
             console.error('Failed to send message:', error);
@@ -103,18 +102,22 @@ if (themeToggle) {
     });
 }
 
-// Smooth Scroll for navigation links (local anchors only)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
+// Intersection Observer for Reveal Animations
+const revealOptions = {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+};
 
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            e.preventDefault();
-            targetElement.scrollIntoView({
-                behavior: 'smooth'
-            });
+const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
         }
     });
+}, revealOptions);
+
+document.querySelectorAll('.section, .info-card, .hero-content').forEach(el => {
+    el.classList.add('reveal');
+    revealObserver.observe(el);
 });
