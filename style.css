@@ -800,6 +800,21 @@ textarea.form-control {
     border-color: rgba(212, 255, 89, 0.2);
 }
 
+/* About Page Image Effects */
+.about-image {
+    width: 100%;
+    border-radius: 20px;
+    filter: grayscale(1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.about-image:hover {
+    filter: grayscale(0);
+    transform: scale(1.02);
+    border-color: rgba(212, 255, 89, 0.2);
+}
+
 /* Blog Page Styles */
 .blog-featured-card {
     background: var(--dark-card);
