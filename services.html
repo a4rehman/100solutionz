@@ -27,7 +27,19 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="services.html" class="active">Services</a></li>
+                    <li class="has-dropdown">
+                        <a href="services.html" class="active">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="web-development.html"><span>Website Development & Optimization</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                            <li><a href="app-development.html"><span>App Development</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                            <li><a href="digital-marketing.html"><span>Digital Marketing Services</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                            <li><a href="ai-development.html"><span>AI & Machine Learning</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                        </ul>
+                    </li>
                     <li><a href="work.html">Work</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="contact.html" class="btn-chat">Book a Call</a></li>
@@ -66,37 +78,36 @@
             </div>
         </section>
 
-        <section class="section" style="background: #050505;">
+        <section class="section" style="background: #050505; padding: 120px 0;">
             <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px;">
-                    <div>
-                        <h2 style="font-size: 24px; margin-bottom: 30px; color: var(--accent-color);">Development</h2>
-                        <ul style="list-style: none; padding: 0; line-height: 2; color: var(--text-muted);">
-                            <li>• UX/UI Design</li>
-                            <li>• Backend Development</li>
-                            <li>• Custom Software</li>
-                            <li>• Cloud Infrastructure</li>
-                            <li>• MVP Development</li>
+                <div class="service-details-grid">
+                    <div class="service-detail-card">
+                        <h2><i class="fas fa-code"></i> Development</h2>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> UX/UI Design</li>
+                            <li><i class="fas fa-chevron-right"></i> Backend Development</li>
+                            <li><i class="fas fa-chevron-right"></i> Custom Software</li>
+                            <li><i class="fas fa-chevron-right"></i> Cloud Infrastructure</li>
+                            <li><i class="fas fa-chevron-right"></i> MVP Development</li>
                         </ul>
                     </div>
-                    <div>
-                        <h2 style="font-size: 24px; margin-bottom: 30px; color: var(--accent-color);">AI & Data</h2>
-                        <ul style="list-style: none; padding: 0; line-height: 2; color: var(--text-muted);">
-                            <li>• Model Training</li>
-                            <li>• Data Engineering</li>
-                            <li>• LLM Orchestration</li>
-                            <li>• Sentiment Analysis</li>
-                            <li>• Predictive Analytics</li>
+                    <div class="service-detail-card">
+                        <h2><i class="fas fa-brain"></i> AI & Data</h2>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> Model Training</li>
+                            <li><i class="fas fa-chevron-right"></i> Data Engineering</li>
+                            <li><i class="fas fa-chevron-right"></i> LLM Orchestration</li>
+                            <li><i class="fas fa-chevron-right"></i> Sentiment Analysis</li>
+                            <li><i class="fas fa-chevron-right"></i> Predictive Analytics</li>
                         </ul>
                     </div>
-                    <div>
-                        <h2 style="font-size: 24px; margin-bottom: 30px; color: var(--accent-color);">Growth</h2>
-                        <ul style="list-style: none; padding: 0; line-height: 2; color: var(--text-muted);">
-                            <li>• Digital Marketing</li>
-                            <li>• SEO Strategy</li>
-                            <li>• Lead Generation</li>
-                            <li>• Email Automation</li>
-                            <li>• CRM Optimization</li>
+                    <div class="service-detail-card">
+                        <h2><i class="fas fa-rocket"></i> Growth</h2>
+                        <ul>
+                            <li><i class="fas fa-chevron-right"></i> Digital Marketing</li>
+                            <li><i class="fas fa-chevron-right"></i> SEO Strategy</li>
+                            <li><i class="fas fa-chevron-right"></i> Email Automation</li>
+                            <li><i class="fas fa-chevron-right"></i> CRM Optimization</li>
                         </ul>
                     </div>
                 </div>
@@ -120,44 +131,53 @@
         </section>
     </main>
 
-    <footer style="padding: 100px 0 40px; border-top: 1px solid #1a1a1a;">
+    <footer>
         <div class="container">
-            <div style="display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 80px; margin-bottom: 80px;">
-                <div>
-                    <div class="logo" style="margin-bottom: 30px;">100Solutionz</div>
-                    <p style="color: var(--text-muted); max-width: 320px; line-height: 1.8;">
-                        100Solutionz pairs AI automation with elite offshore engineering talent — helping companies
-                        eliminate
-                        repetitive work, scale their teams, and ship faster.
-                    </p>
-                </div>
-                <div>
-                    <h4
-                        style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5;">
-                        Pages</h4>
-                    <ul style="list-style: none; line-height: 2.5;">
-                        <li><a href="index.html" style="color: #fff; text-decoration: none;">Home</a></li>
-                        <li><a href="about.html" style="color: #fff; text-decoration: none;">About</a></li>
-                        <li><a href="services.html" style="color: #fff; text-decoration: none;">Services</a></li>
-                        <li><a href="work.html" style="color: #fff; text-decoration: none;">Work</a></li>
-                        <li><a href="blog.html" style="color: #fff; text-decoration: none;">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4
-                        style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5;">
-                        Ready to start?</h4>
-                    <div style="line-height: 2.5;">
-                        <a href="contact.html" style="color: #fff; text-decoration: none;">Book a Call ›</a><br>
-                        <a href="mailto:hello@100solutionz.com"
-                            style="color: #fff; text-decoration: none;">hello@100solutionz.com</a>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">100<span>Solutionz</span></div>
+                    <p>Leading the digital transformation with innovative solutions and creative design.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/100solutionz/" class="social-icon" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/company/100solutionz" class="social-icon" target="_blank"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Our Services</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Web Development</a></li>
+                        <li><a href="services.html">App Development</a></li>
+                        <li><a href="services.html">Digital Marketing</a></li>
+                        <li><a href="services.html">SEO Services</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-location-dot"></i> Lahore, Pakistan</li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@100solutionz.com"
+                                style="color: inherit; text-decoration: none;">info@100solutionz.com</a></li>
+                        <li><i class="fas fa-phone"></i> +92 300 0000000</li>
+                    </ul>
+                </div>
             </div>
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 40px; font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">
-                <div>© 2026 100Solutionz. All rights reserved.</div>
-                <div>Engineered with precision.</div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 100Solutionz. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

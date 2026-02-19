@@ -24,7 +24,19 @@
                 <ul class="nav-links">
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
+                    <li class="has-dropdown">
+                        <a href="services.html" class="active">Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="web-development.html"><span>Website Development & Optimization</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                            <li><a href="app-development.html"><span>App Development</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                            <li><a href="digital-marketing.html"><span>Digital Marketing Services</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                            <li><a href="ai-development.html"><span>AI & Machine Learning</span> <i
+                                        class="fas fa-chevron-right"></i></a></li>
+                        </ul>
+                    </li>
                     <li><a href="work.html">Work</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="contact.html" class="btn-chat">Book a Call</a></li>
@@ -48,12 +60,19 @@
                     <a href="work.html" class="btn-secondary">View Work ›</a>
                 </div>
 
-                <div style="margin-top: 100px; display: flex; justify-content: center; gap: 40px; opacity: 0.3;">
-                    <i class="fab fa-google fa-2x"></i>
-                    <i class="fab fa-amazon fa-2x"></i>
-                    <i class="fab fa-microsoft fa-2x"></i>
-                    <i class="fab fa-spotify fa-2x"></i>
-                    <i class="fab fa-uber fa-2x"></i>
+                <div style="margin-top: 120px;">
+                    <p
+                        style="text-transform: uppercase; letter-spacing: 3px; font-size: 11px; opacity: 0.4; margin-bottom: 30px; font-weight: 600;">
+                        Leading teams trust 100Solutionz</p>
+                    <div
+                        style="display: flex; justify-content: center; gap: clamp(30px, 5vw, 60px); opacity: 0.4; filter: grayscale(1); flex-wrap: wrap;">
+                        <i class="fab fa-google fa-2x"></i>
+                        <i class="fab fa-amazon fa-2x"></i>
+                        <i class="fab fa-microsoft fa-2x"></i>
+                        <i class="fab fa-spotify fa-2x"></i>
+                        <i class="fab fa-uber fa-2x"></i>
+                        <i class="fab fa-slack fa-2x"></i>
+                    </div>
                 </div>
             </div>
         </section>
@@ -69,16 +88,22 @@
 
                 <div class="info-grid">
                     <div class="info-card">
+                        <i class="fas fa-robot"
+                            style="font-size: 28px; color: var(--accent-color); margin-bottom: 25px; display: block;"></i>
                         <h3 style="color: var(--accent-color);">AI Chatbots</h3>
                         <p style="color: var(--text-muted);">Intelligent agents that handle customer inquiries, internal
                             support, and data retrieval around the clock.</p>
                     </div>
                     <div class="info-card">
+                        <i class="fas fa-wand-magic-sparkles"
+                            style="font-size: 28px; color: var(--accent-color); margin-bottom: 25px; display: block;"></i>
                         <h3 style="color: var(--accent-color);">Workflow Automation</h3>
                         <p style="color: var(--text-muted);">Streamline your business processes with custom scripts and
                             LLM-powered decision engines.</p>
                     </div>
                     <div class="info-card">
+                        <i class="fas fa-house-laptop"
+                            style="font-size: 28px; color: var(--accent-color); margin-bottom: 25px; display: block;"></i>
                         <h3 style="color: var(--accent-color);">Elite Talent</h3>
                         <p style="color: var(--text-muted);">Access the top 1% of offshore engineering talent, vetted
                             and ready to integrate with your team.</p>
@@ -88,93 +113,122 @@
         </section>
 
         <!-- How we work -->
-        <section class="section" style="background: #050505;">
+        <section class="section" style="background: #050505; padding: 150px 0;">
             <div class="container">
-                <h2 class="section-headline">How we <i>work</i></h2>
-                <div class="info-grid" style="grid-template-columns: repeat(4, 1fr);">
-                    <div>
-                        <div style="font-size: 13px; color: var(--accent-color); margin-bottom: 20px;">01</div>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <span class="hero-tag">Our Methodology</span>
+                    <h2 class="section-headline">How we <i>work</i></h2>
+                </div>
+
+                <div class="process-grid">
+                    <div class="process-card">
+                        <div class="process-step-num">01</div>
+                        <i class="fas fa-magnifying-glass-chart"></i>
                         <h3>Discovery</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">We dive deep into your
-                            workflows to find high-impact automation opportunities.</p>
+                        <p>We dive deep into your workflows to identify high-impact automation opportunities that drive
+                            growth.</p>
                     </div>
-                    <div>
-                        <div style="font-size: 13px; color: var(--accent-color); margin-bottom: 20px;">02</div>
+                    <div class="process-card">
+                        <div class="process-step-num">02</div>
+                        <i class="fas fa-chess-board"></i>
                         <h3>Strategy</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">We design a roadmap for
-                            automation and talent integration tailored to your goals.</p>
+                        <p>We design a comprehensive roadmap for AI integration tailored precisely to your business
+                            objectives.</p>
                     </div>
-                    <div>
-                        <div style="font-size: 13px; color: var(--accent-color); margin-bottom: 20px;">03</div>
+                    <div class="process-card">
+                        <div class="process-step-num">03</div>
+                        <i class="fas fa-code-branch"></i>
                         <h3>Build</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">Our engineers build and
-                            deploy your custom AI solutions with speed and precision.</p>
+                        <p>Our expert engineers build and deploy custom AI solutions with speed, precision, and
+                            scalability in mind.</p>
                     </div>
-                    <div>
-                        <div style="font-size: 13px; color: var(--accent-color); margin-bottom: 20px;">04</div>
+                    <div class="process-card">
+                        <div class="process-step-num">04</div>
+                        <i class="fas fa-chart-line"></i>
                         <h3>Scale</h3>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">We continuously optimize
-                            and scale your systems as your business grows.</p>
+                        <p>We continuously optimize and scale your systems for maximum efficiency as your business
+                            evolves.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Ready to innovate CTA -->
-        <section class="section" style="text-align: center; padding: 150px 0;">
-            <div class="container">
-                <h2 style="font-size: 64px; margin-bottom: 30px;">Let's automate what <br><i
-                        style="color: var(--accent-color);">slows you down.</i></h2>
-                <p style="color: var(--text-muted); margin-bottom: 50px; font-size: 18px;">Tell us about your
-                    bottlenecks, and we'll show you how to solve them with AI.</p>
-                <a href="contact.html" class="btn-chat" style="padding: 18px 50px; font-size: 18px;">Book a Call</a>
-                <div style="margin-top: 30px; opacity: 0.5; font-size: 14px;">No commitment required. 30-minute
-                    discovery call.</div>
+        <section class="section" style="padding: 150px 0;">
+            <div class="container"
+                style="background: linear-gradient(135deg, #0a1100 0%, #000 100%); padding: 120px 40px; border-radius: 50px; border: 1px solid rgba(212, 255, 89, 0.1); text-align: center; position: relative; overflow: hidden;">
+                <div
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(212, 255, 89, 0.05) 0%, transparent 70%); pointer-events: none;">
+                </div>
+                <h2
+                    style="font-size: clamp(40px, 8vw, 72px); line-height: 1.1; margin-bottom: 35px; position: relative; letter-spacing: -2px;">
+                    Let's automate what <br><i style="color: var(--accent-color);">slows you down.</i></h2>
+                <p
+                    style="color: var(--text-muted); margin-bottom: 50px; font-size: 20px; max-width: 600px; margin-left: auto; margin-right: auto; position: relative; line-height: 1.6;">
+                    Tell us about your
+                    bottlenecks, and we'll show you how to solve them with custom AI agents.</p>
+                <a href="contact.html" class="btn-chat"
+                    style="padding: 20px 60px; font-size: 18px; position: relative; display: inline-block;">Book a
+                    Discovery Call ›</a>
+                <div
+                    style="margin-top: 35px; opacity: 0.5; font-size: 14px; position: relative; text-transform: uppercase; letter-spacing: 2px;">
+                    No commitment required • 30-minute discovery call</div>
             </div>
         </section>
     </main>
-    <footer style="padding: 100px 0 40px; border-top: 1px solid #1a1a1a;">
+    <footer>
         <div class="container">
-            <div style="display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 80px; margin-bottom: 80px;">
-                <div>
-                    <div class="logo" style="margin-bottom: 30px;">100Solutionz</div>
-                    <p style="color: var(--text-muted); max-width: 320px; line-height: 1.8;">
-                        100Solutionz pairs AI automation with elite offshore engineering talent — helping companies
-                        eliminate repetitive work, scale their teams, and ship faster.
-                    </p>
-                </div>
-                <div>
-                    <h4
-                        style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5;">
-                        Pages</h4>
-                    <ul style="list-style: none; line-height: 2.5;">
-                        <li><a href="index.html" style="color: #fff; text-decoration: none;">Home</a></li>
-                        <li><a href="about.html" style="color: #fff; text-decoration: none;">About</a></li>
-                        <li><a href="services.html" style="color: #fff; text-decoration: none;">Services</a></li>
-                        <li><a href="work.html" style="color: #fff; text-decoration: none;">Work</a></li>
-                        <li><a href="blog.html" style="color: #fff; text-decoration: none;">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4
-                        style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5;">
-                        Ready to start?</h4>
-                    <div style="line-height: 2.5;">
-                        <a href="contact.html" style="color: #fff; text-decoration: none;">Book a Call ›</a><br>
-                        <a href="mailto:hello@100solutionz.com"
-                            style="color: #fff; text-decoration: none;">hello@100solutionz.com</a>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">100<span>Solutionz</span></div>
+                    <p>Leading the digital transformation with innovative solutions and creative design.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/100solutionz/" class="social-icon" target="_blank"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/company/100solutionz" class="social-icon" target="_blank"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
+
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Our Services</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Web Development</a></li>
+                        <li><a href="services.html">App Development</a></li>
+                        <li><a href="services.html">Digital Marketing</a></li>
+                        <li><a href="services.html">SEO Services</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-location-dot"></i> Lahore, Pakistan</li>
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:info@100solutionz.com"
+                                style="color: inherit; text-decoration: none;">info@100solutionz.com</a></li>
+                        <li><i class="fas fa-phone"></i> +92 300 0000000</li>
+                    </ul>
+                </div>
             </div>
-            <div
-                style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 40px; font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px;">
-                <div>© 2026 100Solutionz. All rights reserved.</div>
-                <div>Engineered with precision.</div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 100Solutionz. All Rights Reserved.</p>
             </div>
         </div>
-        <script src="config.js"></script>
-        <script src="script.js"></script>
-        <script src="chatbot.js"></script>
+    </footer>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>
