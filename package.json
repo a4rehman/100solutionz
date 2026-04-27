@@ -1,0 +1,12 @@
+{
+  "name": "100solutionz",
+  "version": "1.0.0",
+  "description": "Intelligent AI & Digital Innovation",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
