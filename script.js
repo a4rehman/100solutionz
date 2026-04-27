@@ -25,7 +25,7 @@ Direct Page: ${window.location.pathname}`,
             visitor_info: `Location: ${data.cityName}, ${data.countryName} | IP: ${data.ipAddress}`
         };
 
-        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, templateParams);
+        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TRACKING_TEMPLATE_ID, templateParams);
         sessionStorage.setItem(sessionKey, 'true');
     } catch (error) {
         console.error('Visitor tracking failed:', error);
