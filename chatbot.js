@@ -23,7 +23,6 @@ const WebLoader = {
                 }
             }
             this.knowledgeBase = combinedText.substring(0, 10000); // Context window limit safe
-            console.log("Knowledge base loaded via WebLoader.");
         } catch (error) {
             console.error("Failed to load knowledge base:", error);
         }

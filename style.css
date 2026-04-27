@@ -14,6 +14,16 @@
     --glass: blur(20px);
 }
 
+.trust-icons i {
+    transition: var(--transition);
+}
+
+.trust-icons i:hover {
+    filter: brightness(1) drop-shadow(0 0 10px var(--accent-color));
+    color: var(--accent-color);
+    opacity: 1;
+}
+
 * {
     margin: 0;
     padding: 0;
