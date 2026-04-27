@@ -1,5 +1,6 @@
 const CONFIG = {
     GEMINI_API_KEY: 'AIzaSyAmbODIVwtR6IQVYhtDGPDXEkJ7_tiO1M8',
+    OPENAI_API_KEY: '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',
     EMAILJS_SERVICE_ID: 'service_osplabt',
     EMAILJS_TEMPLATE_ID: 'template_gp8y77k',
     EMAILJS_TRACKING_TEMPLATE_ID: 'template_zgz0g1c',

@@ -155,45 +155,96 @@ const Chatbot = {
             }, 1000);
             return;
         }
+    formatResponse(text) {
+        return text;
+    },
 
-        this.toggleTyping(true);
+    saveChat() {},
+
+    async sendMessage() {
+        const text = this.chatInput.value.trim();
+        if (!text) return;
+
+        this.addMessage(text, 'user');
+        this.chatInput.value = '';
+        const loadingMsg = this.addMessage('Thinking...', 'bot');
 
         try {
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
-
-            const systemPrompt = "You are the 100Solutionz AI Assistant. You are professional, helpful, and knowledgeable about 100Solutionz services: AI Chatbots, AI Model Training, and Digital Marketing/Innovation. 100Solutionz helps brands future-proof their business. Keep responses concise and friendly. Use the following website content as your knowledge base to answer user queries accurately:\n\n" + WebLoader.knowledgeBase;
-
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: this.messages,
-                    system_instruction: {
-                        parts: [{ text: systemPrompt }]
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                const errData = await response.json();
-                throw new Error(errData.error?.message || `HTTP error! status: ${response.status}`);
+            let responseText = "";
+            
+            // Try Gemini First
+            try {
+                responseText = await this.callGemini(text);
+            } catch (geminiError) {
+                console.warn("Gemini failed, trying OpenAI fallback...", geminiError);
+                if (CONFIG.OPENAI_API_KEY && CONFIG.OPENAI_API_KEY !== '...') {
+                    responseText = await this.callOpenAI(text);
+                } else {
+                    throw geminiError;
+                }
             }
 
-            const data = await response.json();
-            this.toggleTyping(false);
-
-            if (data.candidates && data.candidates[0].content.parts[0].text) {
-                const botResponse = data.candidates[0].content.parts[0].text;
-                this.addMessage('bot', botResponse);
-            } else {
-                throw new Error('Invalid response from AI');
-            }
+            loadingMsg.innerHTML = this.formatResponse(responseText);
+            this.saveChat();
         } catch (error) {
-            console.error('AI Error:', error);
-            this.toggleTyping(false);
-            this.addMessage('bot', `Sorry, I'm having trouble connecting to my AI brain. Error: ${error.message}`);
+            console.error('Chatbot Error:', error);
+            let errorMsg = "Sorry, I'm having trouble connecting to my AI brain.";
+            if (error.message.includes("demand") || error.message.includes("503")) {
+                errorMsg = "My brain is a bit busy right now. Please try again in a moment!";
+            }
+            loadingMsg.innerHTML = `<div class="error-msg">${errorMsg}</div>`;
         }
-    }
+    },
+
+    async callGemini(text) {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
+        
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `Context about 100Solutionz: ${WebLoader.knowledgeBase}\n\nUser Question: ${text}\n\nSystem Instruction: Answer professionally as the 100Solutionz AI Assistant. Keep it concise.`
+                    }]
+                }]
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || "Gemini Error");
+        }
+
+        const data = await response.json();
+        return data.candidates[0].content.parts[0].text;
+    },
+
+    async callOpenAI(text) {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${CONFIG.OPENAI_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [
+                    { role: "system", content: `You are the 100Solutionz AI Assistant. Context: ${WebLoader.knowledgeBase}` },
+                    { role: "user", content: text }
+                ],
+                max_tokens: 500
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || "OpenAI Error");
+        }
+
+        const data = await response.json();
+        return data.choices[0].message.content;
+    },
 };
 
 // Initialize chatbot when DOM is ready
