@@ -79,15 +79,15 @@ window.addEventListener('scroll', () => {
 
 // Theme Toggle (with persistence)
 const themeToggle = document.getElementById('theme-toggle');
-const icon = themeToggle.querySelector('i');
-
-// Load saved theme
-if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light-mode');
-    if (icon) icon.classList.replace('fa-moon', 'fa-sun');
-}
-
 if (themeToggle) {
+    const icon = themeToggle.querySelector('i');
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+        if (icon) icon.classList.replace('fa-moon', 'fa-sun');
+    }
+
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('light-mode');
         const isLight = document.body.classList.contains('light-mode');

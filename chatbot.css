@@ -1,9 +1,9 @@
 /* Chatbot Styles */
 :root {
-    --chat-primary: var(--accent-color, #d4ff59);
-    --chat-secondary: #b8e63a;
+    --chat-primary: var(--accent-color, #00aaff);
+    --chat-secondary: #0088cc;
     --chat-bg: #000000;
-    --chat-bubble-user: var(--accent-color, #d4ff59);
+    --chat-bubble-user: var(--accent-color, #00aaff);
     --chat-bubble-bot: #141414;
     --chat-text: #ffffff;
 }

@@ -3,12 +3,40 @@
  * Core logic for chatbot interface and Gemini API integration
  */
 
+const WebLoader = {
+    knowledgeBase: "",
+    pagesToLoad: ['index.html', 'about.html', 'services.html', 'work.html', 'contact.html'],
+    
+    async loadContext() {
+        try {
+            let combinedText = "100Solutionz Website Content:\n\n";
+            for (const page of this.pagesToLoad) {
+                const response = await fetch(page);
+                if (!response.ok) continue;
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const mainContent = doc.querySelector('main') || doc.body;
+                if (mainContent) {
+                    combinedText += `--- Page: ${page} ---\n`;
+                    combinedText += mainContent.innerText.replace(/\s+/g, ' ') + "\n\n";
+                }
+            }
+            this.knowledgeBase = combinedText.substring(0, 10000); // Context window limit safe
+            console.log("Knowledge base loaded via WebLoader.");
+        } catch (error) {
+            console.error("Failed to load knowledge base:", error);
+        }
+    }
+};
+
 const Chatbot = {
     isOpen: false,
     isTyping: false,
     messages: [],
 
-    init() {
+    async init() {
+        await WebLoader.loadContext();
         this.injectHTML();
         this.cacheDOM();
         this.bindEvents();
@@ -134,13 +162,15 @@ const Chatbot = {
         try {
             const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${CONFIG.GEMINI_API_KEY}`;
 
+            const systemPrompt = "You are the 100Solutionz AI Assistant. You are professional, helpful, and knowledgeable about 100Solutionz services: AI Chatbots, AI Model Training, and Digital Marketing/Innovation. 100Solutionz helps brands future-proof their business. Keep responses concise and friendly. Use the following website content as your knowledge base to answer user queries accurately:\n\n" + WebLoader.knowledgeBase;
+
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     contents: this.messages,
                     system_instruction: {
-                        parts: [{ text: "You are the 100Solutionz AI Assistant. You are professional, helpful, and knowledgeable about 100Solutionz services: AI Chatbots, AI Model Training, and Digital Marketing/Innovation. 100Solutionz helps brands future-proof their business. Keep responses concise and friendly." }]
+                        parts: [{ text: systemPrompt }]
                     }
                 })
             });

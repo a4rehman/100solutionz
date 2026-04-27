@@ -2,9 +2,9 @@
     --bg-color: #000000;
     --text-color: #ffffff;
     --text-muted: #a1a1a1;
-    --accent-color: #d4ff59;
-    /* Lime Green */
-    --accent-hover: #b8e63a;
+    --accent-color: #00aaff;
+    /* Professional Blue */
+    --accent-hover: #0088cc;
     --dark-card: #141414;
     --nav-bg: rgba(0, 0, 0, 0.95);
     --font-main: 'Outfit', sans-serif;
@@ -61,6 +61,17 @@ body {
 }
 
 .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 45px;
+    width: auto;
+}
+
+.logo-text {
     font-size: 24px;
     font-weight: 700;
     color: var(--text-color);
@@ -68,8 +79,8 @@ body {
     text-transform: uppercase;
 }
 
-.logo span {
-    color: #fff;
+.logo-text span {
+    color: var(--accent-color);
 }
 
 
