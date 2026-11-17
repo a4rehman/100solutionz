@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, Check, Sparkles, AlertCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, Check, AlertCircle, Calendar } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { getVisitorMetadata } from "@/utils/visitorTracker";
 
-// EmailJS Credentials Configuration - Replace these with your actual keys if different
-const EMAILJS_SERVICE_ID = "service_lw030qp";
-const EMAILJS_TEMPLATE_ID = "template_t2r1s1j";
-const EMAILJS_PUBLIC_KEY = "znlhzaw2OQmZ7uVqd";
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_lw030qp";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_t2r1s1j";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "znlhzaw2OQmZ7uVqd";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
@@ -28,10 +27,8 @@ export default function ContactPage() {
     setErrorMsg("");
 
     try {
-      // 1. Gather Visitor Tracking Metadata
       const trackingMeta = await getVisitorMetadata();
 
-      // 2. Define Context Subject dynamically based on user's inputs
       let formContext = "General Website Lead";
       const sub = (formData.subject || "").toLowerCase();
       const msg = (formData.message || "").toLowerCase();
@@ -44,7 +41,6 @@ export default function ContactPage() {
         formContext = "Mobile App Development Request";
       }
 
-      // 3. Prepare parameters for EmailJS Template variables
       const templateParams = {
         subject: formContext,
         from_name: formData.name,
@@ -55,7 +51,6 @@ export default function ContactPage() {
         ...trackingMeta
       };
 
-      // 4. Send Email via EmailJS
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -66,10 +61,10 @@ export default function ContactPage() {
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    } catch (error: any) {
-      console.error("EmailJS Error:", error);
+    } catch (err: unknown) {
       setIsSubmitting(false);
-      setErrorMsg(error?.text || "Failed to dispatch email. Please try again or email us directly.");
+      const message = err instanceof Error ? err.message : "Failed to dispatch email. Please try again or email us directly.";
+      setErrorMsg(message);
     }
   };
 
@@ -81,23 +76,23 @@ export default function ContactPage() {
     <div className="flex flex-col w-full relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
       {/* 1. HEADER */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <span className="text-xs uppercase font-black tracking-widest text-brand-green">
-          Get in Touch
+      <div className="text-center max-w-3xl mx-auto mb-14">
+        <span className="text-xs uppercase font-bold tracking-widest text-[var(--accent)]">
+          Direct Technical Access
         </span>
-        <h1 className="text-4xl font-black text-slate-900 dark:text-white mt-2 tracking-tight">
-          Connect With Our <span className="text-gradient">Engineering Team</span>
+        <h1 className="text-3xl sm:text-5xl font-black text-[var(--text-primary)] mt-2 tracking-tight">
+          Connect With Our <span className="text-gradient">Engineering Leadership</span>
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed font-medium">
-          Have an idea or standard RFP specifications? Submit the form below or book a direct strategy call.
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-3 leading-relaxed">
+          Have an upcoming product roadmap, AI automation goal, or RFP specification? Send us a direct message or book a technical consultation session.
         </p>
       </div>
 
       {/* 2. SPLIT LAYOUT CONTAINER */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
         {/* Left: Contact Form Column */}
-        <div className="lg:col-span-7 rounded-3xl glass-panel p-6 sm:p-8 border border-slate-200/50 dark:border-slate-850 shadow-xl bg-slate-100/30 dark:bg-[#0c1224]/20 relative overflow-hidden flex flex-col justify-between">
+        <div className="lg:col-span-7 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-6 sm:p-8 shadow-xs flex flex-col justify-between">
           
           <AnimatePresence mode="wait">
             {!submitSuccess ? (
@@ -107,86 +102,84 @@ export default function ContactPage() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onSubmit={handleSubmit}
-                className="grid gap-4.5"
+                className="space-y-4"
               >
                 <div>
-                  <h2 className="text-lg font-black text-slate-900 dark:text-white mb-1.5">
-                    Send Us a Message
+                  <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                    Send Us an Inquiry
                   </h2>
-                  <p className="text-xs text-slate-450 dark:text-slate-400 mb-4 font-semibold">
-                    We sign bilateral NDAs before discussing technical details.
+                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                    We sign bilateral NDAs before discussing proprietary specifications.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 uppercase mb-1.5">
-                      Your Name *
+                    <label className="block text-[11px] font-bold text-[var(--text-primary)] mb-1">
+                      Your Full Name *
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Alice"
+                      placeholder="e.g. Jordan Lee"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-slate-200/50 dark:bg-slate-900 border border-slate-350/40 dark:border-slate-800 focus:outline-none focus:border-brand-green text-slate-850 dark:text-slate-100 cursor-none"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--input-border)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 uppercase mb-1.5">
-                      Email Address *
+                    <label className="block text-[11px] font-bold text-[var(--text-primary)] mb-1">
+                      Work Email *
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. alice@domain.com"
+                      placeholder="jordan@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-slate-200/50 dark:bg-slate-900 border border-slate-350/40 dark:border-slate-800 focus:outline-none focus:border-brand-green text-slate-850 dark:text-slate-100 cursor-none"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--input-border)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 uppercase mb-1.5">
+                    <label className="block text-[11px] font-bold text-[var(--text-primary)] mb-1">
                       Phone Number (Optional)
                     </label>
                     <input
                       type="tel"
-                      placeholder="e.g. +1 234 567 890"
+                      placeholder="+1 (555) 019-9100"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-slate-200/50 dark:bg-slate-900 border border-slate-350/40 dark:border-slate-800 focus:outline-none focus:border-brand-green text-slate-850 dark:text-slate-100 cursor-none"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--input-border)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-semibold text-slate-500 uppercase mb-1.5">
-                      Subject (Optional)
+                    <label className="block text-[11px] font-bold text-[var(--text-primary)] mb-1">
+                      Project Topic
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. AI Agent Scope"
+                      placeholder="e.g. Enterprise RAG Pipeline"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-slate-200/50 dark:bg-slate-900 border border-slate-350/40 dark:border-slate-800 focus:outline-none focus:border-brand-green text-slate-850 dark:text-slate-100 cursor-none"
+                      className="w-full px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--input-border)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
                     />
                   </div>
                 </div>
 
-
-
                 <div>
-                  <label className="block text-[10px] font-semibold text-slate-500 uppercase mb-1.5">
-                    Message Detail *
+                  <label className="block text-[11px] font-bold text-[var(--text-primary)] mb-1">
+                    Project Requirements / Timeline *
                   </label>
                   <textarea
-                    rows={5}
+                    rows={4}
                     required
-                    placeholder="Briefly explain your budget timeline, requirements, or tech stacks..."
+                    placeholder="Briefly describe your objectives, existing tech stack, and timeline goals..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-2.5 text-xs rounded-xl bg-slate-200/50 dark:bg-slate-900 border border-slate-350/40 dark:border-slate-800 focus:outline-none focus:border-brand-green text-slate-850 dark:text-slate-100 cursor-none"
+                    className="w-full px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--input-border)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] resize-none cursor-text"
                   />
                 </div>
 
@@ -197,13 +190,13 @@ export default function ContactPage() {
                   </div>
                 )}
 
-                <div className="mt-2">
+                <div className="pt-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-green to-brand-blue text-white font-bold text-xs shadow-md hover:scale-101 transition-transform disabled:opacity-50 flex items-center justify-center gap-2 cursor-none"
+                    className="w-full py-3 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                   >
-                    {isSubmitting ? "Sending message..." : "Send Message"}
+                    {isSubmitting ? "Dispatching Message..." : "Submit Technical Inquiry"}
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -213,22 +206,23 @@ export default function ContactPage() {
                 key="success-screen"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center text-center gap-6 py-12 justify-center h-full"
+                className="flex flex-col items-center text-center gap-4 py-12 justify-center h-full"
               >
-                <div className="w-16 h-16 rounded-full bg-brand-green/20 border border-brand-green flex items-center justify-center text-brand-green shadow-lg">
-                  <Check className="w-8 h-8" />
+                <div className="w-14 h-14 rounded-full bg-[var(--selection-bg)] text-[var(--accent)] flex items-center justify-center shadow-xs">
+                  <Check className="w-7 h-7" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-black text-slate-800 dark:text-slate-100">
-                    Message Dispatched!
+                  <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                    Inquiry Received!
                   </h2>
-                  <p className="text-xs text-slate-450 dark:text-slate-400 mt-2 max-w-sm leading-relaxed font-semibold">
-                    Thank you. Your message has been sent to our sales inbox. We will contact you shortly.
+                  <p className="text-xs text-[var(--text-secondary)] mt-1.5 max-w-sm leading-relaxed">
+                    Thank you. Your message has been routed to our technical leadership team. We typically respond within 2 to 4 business hours.
                   </p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setSubmitSuccess(false)}
-                  className="px-6 py-2.5 rounded-xl border border-slate-350 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900 text-xs font-bold cursor-none"
+                  className="px-5 py-2 rounded-lg border border-[var(--card-border)] bg-[var(--surface-elevated)] hover:bg-[var(--surface-muted)] text-xs font-bold text-[var(--text-primary)] cursor-pointer"
                 >
                   Send another message
                 </button>
@@ -238,41 +232,47 @@ export default function ContactPage() {
 
         </div>
 
-        {/* Right: Info & Map Column */}
+        {/* Right: Info & Locations Column */}
         <div className="lg:col-span-5 flex flex-col gap-6">
           
-          {/* Contact Details Card */}
-          <div className="p-6 rounded-3xl glass-panel border border-slate-200/50 dark:border-slate-850 bg-slate-100/30 dark:bg-[#0c1224]/20 shadow-md">
-            <h3 className="text-xs font-black uppercase tracking-wider text-slate-450 mb-5">
-              Direct Channels
+          {/* Direct Channels Card */}
+          <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-xs">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
+              Direct Contact Channels
             </h3>
             
-            <div className="flex flex-col gap-4">
-              <div className="flex items-start gap-3 text-xs font-medium">
-                <Mail className="w-4.5 h-4.5 text-brand-green mt-0.5 flex-shrink-0" />
+            <div className="space-y-4 text-xs">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-[var(--surface-elevated)] text-[var(--accent)] mt-0.5">
+                  <Mail className="w-4 h-4" />
+                </div>
                 <div>
-                  <span className="text-slate-400 block font-normal">Sales & Support</span>
-                  <a href="mailto:live40220@gmail.com" className="hover:text-brand-green transition-colors cursor-none font-bold">
+                  <span className="text-[10px] text-[var(--text-muted)] block font-semibold">Engineering &amp; Sales</span>
+                  <a href="mailto:live40220@gmail.com" className="font-bold text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors">
                     live40220@gmail.com
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 text-xs font-medium">
-                <Phone className="w-4.5 h-4.5 text-brand-blue mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-[var(--surface-elevated)] text-[var(--secondary-accent)] mt-0.5">
+                  <Phone className="w-4 h-4" />
+                </div>
                 <div>
-                  <span className="text-slate-400 block font-normal">Phone Inquiries</span>
-                  <a href="tel:+15550199100" className="hover:text-brand-blue transition-colors cursor-none font-bold">
+                  <span className="text-[10px] text-[var(--text-muted)] block font-semibold">Direct Phone Inquiries</span>
+                  <a href="tel:+15550199100" className="font-bold text-[var(--text-primary)] hover:text-[var(--secondary-accent)] transition-colors">
                     +1 (555) 019-9100
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 text-xs font-medium">
-                <Clock className="w-4.5 h-4.5 text-brand-green mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-lg bg-[var(--surface-elevated)] text-emerald-500 mt-0.5">
+                  <Clock className="w-4 h-4" />
+                </div>
                 <div>
-                  <span className="text-slate-400 block font-normal">Business Hours</span>
-                  <span className="font-bold text-slate-800 dark:text-slate-200">
+                  <span className="text-[10px] text-[var(--text-muted)] block font-semibold">Hours of Operation</span>
+                  <span className="font-bold text-[var(--text-primary)]">
                     Monday &mdash; Friday (9:00 AM - 6:00 PM EST)
                   </span>
                 </div>
@@ -280,42 +280,31 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* SVG Customized Vector Nodes map */}
-          <div className="p-6 rounded-3xl glass-panel border border-slate-200/50 dark:border-slate-850 bg-slate-100/30 dark:bg-[#0c1224]/20 shadow-md flex-1 flex flex-col justify-between min-h-[220px]">
+          {/* Locations & Booking Card */}
+          <div className="p-6 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--card-border)] shadow-xs flex-1 flex flex-col justify-between">
             <div>
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-450 mb-1 flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-brand-green" /> Office Locations
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-1 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-[var(--accent)]" /> Office Locations
               </h3>
-              <p className="text-[10px] text-slate-450 font-semibold mb-3">
-                Silicon Valley, California & Lahore, Pakistan
+              <p className="text-xs text-[var(--text-secondary)] font-medium mb-4">
+                Silicon Valley, California &bull; Lahore, Pakistan
               </p>
             </div>
-            
-            {/* SVG MAP */}
-            <div className="w-full h-32 bg-slate-200/40 dark:bg-slate-950 rounded-2xl border border-slate-350/20 flex items-center justify-center relative overflow-hidden">
-              <svg viewBox="0 0 400 200" className="w-full h-full text-slate-400 dark:text-slate-700">
-                {/* World contour dots mock layout */}
-                <path d="M 20 80 Q 80 50 130 80 T 260 80 T 380 60" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-                <path d="M 40 120 Q 110 140 180 120 T 320 120 T 360 140" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-                
-                {/* Silicon Valley Node */}
-                <circle cx="90" cy="80" r="4" fill="#4ADE2A" className="animate-ping" style={{ transformOrigin: "90px 80px" }} />
-                <circle cx="90" cy="80" r="3" fill="#4ADE2A" />
-                <text x="90" y="65" fontSize="8" fill="currentColor" fontWeight="black" textAnchor="middle" className="text-slate-800 dark:text-slate-400">Silicon Valley</text>
-                
-                {/* Lahore Node */}
-                <circle cx="280" cy="100" r="4" fill="#3498DB" className="animate-ping" style={{ transformOrigin: "280px 100px" }} />
-                <circle cx="280" cy="100" r="3" fill="#3498DB" />
-                <text x="280" y="85" fontSize="8" fill="currentColor" fontWeight="black" textAnchor="middle" className="text-slate-800 dark:text-slate-400">Lahore Office</text>
-              </svg>
-            </div>
 
-            <div className="mt-4">
+            <div className="p-4 rounded-xl bg-[var(--surface)] border border-[var(--card-border)] text-center">
+              <Calendar className="w-6 h-6 text-[var(--secondary-accent)] mx-auto mb-2" />
+              <h4 className="text-xs font-bold text-[var(--text-primary)]">
+                Prefer a Live Consultation?
+              </h4>
+              <p className="text-[11px] text-[var(--text-secondary)] mt-1 mb-3">
+                Pick a direct slot on our calendar to discuss architecture with lead engineers.
+              </p>
               <button
+                type="button"
                 onClick={openCalendly}
-                className="w-full py-2.5 text-center text-xs font-bold rounded-xl bg-brand-green/10 border border-brand-green/20 hover:border-brand-green hover:bg-brand-green/20 text-brand-green transition-all cursor-none"
+                className="w-full py-2.5 rounded-lg bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-xs"
               >
-                Schedule direct calendar slot
+                Open Scheduling Calendar
               </button>
             </div>
           </div>

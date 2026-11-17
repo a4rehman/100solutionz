@@ -1,55 +1,71 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useTransition } from "react";
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function applyThemeToDocument(theme: Theme) {
+  if (typeof document === "undefined") return;
+  const root = document.documentElement;
+  if (theme === "dark") {
+    root.classList.add("dark");
+    root.style.colorScheme = "dark";
+  } else {
+    root.classList.remove("dark");
+    root.style.colorScheme = "light";
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark"); // Default to dark as requested
-  const [mounted, setMounted] = useState(false);
+  const [theme, setThemeState] = useState<Theme>("dark");
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
-    // Read from localStorage or system preference
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const initialTheme = savedTheme || "dark"; // Default to dark mode
+    try {
+      const savedTheme = localStorage.getItem("theme") as Theme | null;
+      let initialTheme: Theme = "dark";
+      if (savedTheme === "light" || savedTheme === "dark") {
+        initialTheme = savedTheme;
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+        initialTheme = "light";
+      }
 
-    setTheme(initialTheme);
-    setMounted(true);
-
-    if (initialTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+      startTransition(() => {
+        setThemeState(initialTheme);
+      });
+      applyThemeToDocument(initialTheme);
+    } catch {
+      // Fallback if localStorage or media queries fail
+      applyThemeToDocument("dark");
     }
   }, []);
+
+  const setTheme = (newTheme: Theme) => {
+    startTransition(() => {
+      setThemeState(newTheme);
+    });
+    try {
+      localStorage.setItem("theme", newTheme);
+    } catch {}
+    applyThemeToDocument(newTheme);
+  };
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
-    localStorage.setItem("theme", nextTheme);
-
-    if (nextTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.style.colorScheme = "dark";
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.style.colorScheme = "light";
-    }
   };
 
-  // Prevent hydration mismatch by rendering children only after mounting
-  // (or return child layout, but ensure we don't flash)
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div className={mounted ? "" : "invisible"}>{children}</div>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+      {children}
     </ThemeContext.Provider>
   );
 }

@@ -1,30 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 
 const testimonials = [
   {
     quote: "100Solutionz took our raw agentic AI requirements and developed a production-ready multi-agent system in record time. Their senior technical expertise in RAG databases and vector search was evident from day one.",
     author: "Dr. Sarah Jenkins",
-    role: "VP of AI",
+    role: "VP of AI Operations",
     company: "Biotech Nexus Corp",
-    rating: 5,
   },
   {
-    quote: "The web portal they designed is a masterpiece. It integrates complex analytics, has extremely low latency, and looks breathtaking. Our conversion rate increased by 40% within the first month of going live.",
+    quote: "The web portal they designed is a masterpiece. It integrates complex telemetry analytics, has extremely low latency, and handles our heavy user volume seamlessly. Our user retention surged within the first month.",
     author: "Marcello Russo",
     role: "Co-Founder & CEO",
     company: "Scribe SaaS Inc",
-    rating: 5,
   },
   {
-    quote: "Outstanding mobile engineering. They delivered our iOS and Android applications ahead of schedule, with zero runtime bugs. Their sprint communication is the best I've experienced in 15 years.",
+    quote: "Outstanding mobile and cloud engineering. They delivered our iOS and Android applications ahead of schedule, with zero critical bugs. Their sprint communication is the best I've experienced in 15 years.",
     author: "Amelie Dubois",
     role: "Product Director",
     company: "Fintech Flow Ltd",
-    rating: 5,
   },
 ];
 
@@ -39,97 +35,66 @@ export default function HomeTestimonials() {
     setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  const t = testimonials[current];
+
   return (
-    <section className="py-20 relative z-10 px-4 sm:px-6 lg:px-8 bg-slate-100/30 dark:bg-[#080d1a]/20 border-y border-slate-200/50 dark:border-slate-850/50">
+    <section className="py-20 relative z-10 px-4 sm:px-6 lg:px-8 bg-[var(--background)]">
       <div className="max-w-4xl mx-auto">
         
-        {/* Header */}
+        {/* Section Header */}
         <div className="text-center mb-12">
-          <span className="text-xs uppercase font-black tracking-widest text-brand-green">
-            Client Success
+          <span className="text-xs uppercase font-bold tracking-widest text-[var(--accent)]">
+            Client Perspectives
           </span>
-          <h2 className="text-3xl font-black mt-2 text-slate-900 dark:text-white tracking-tight">
-            Loved by Builders Globally
+          <h2 className="text-2xl sm:text-4xl font-extrabold mt-2 text-[var(--text-primary)] tracking-tight">
+            Trusted by Technology Founders &amp; Leads
           </h2>
         </div>
 
-        {/* Carousel Deck */}
-        <div className="relative glass-panel rounded-3xl p-8 md:p-12 border border-slate-200/50 dark:border-slate-850 shadow-xl overflow-hidden min-h-[300px] flex flex-col justify-between bg-slate-100/10 dark:bg-[#0c1224]/20">
+        {/* Carousel Card Deck */}
+        <div className="relative rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-6 sm:p-10 shadow-sm flex flex-col justify-between min-h-[260px]">
           
-          <div className="absolute top-6 right-8 text-brand-green/20">
-            <Quote className="w-20 h-20 rotate-180" />
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
-              className="flex flex-col gap-6"
-            >
-              {/* Rating */}
-              <div className="flex items-center gap-1">
-                {Array.from({ length: testimonials[current].rating }).map((_, i) => (
-                  <Star key={i} className="w-4.5 h-4.5 fill-amber-400 text-amber-400 filter drop-shadow-[0_0_4px_rgba(251,191,36,0.3)]" />
-                ))}
-              </div>
-
-              {/* Quote text */}
-              <blockquote className="text-base md:text-lg text-slate-700 dark:text-slate-200 leading-relaxed font-semibold">
-                &ldquo;{testimonials[current].quote}&rdquo;
-              </blockquote>
-
-              {/* Author info */}
-              <div>
-                <cite className="not-italic text-sm font-black text-slate-900 dark:text-white block">
-                  {testimonials[current].author}
-                </cite>
-                <span className="text-xs text-slate-400 mt-0.5 block font-medium">
-                  {testimonials[current].role} &mdash; {testimonials[current].company}
-                </span>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-between mt-10 pt-6 border-t border-slate-200/50 dark:border-slate-850/50">
-            
-            {/* Dots */}
-            <div className="flex items-center gap-2">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrent(idx)}
-                  className={`w-2 h-2 rounded-full transition-all cursor-none ${
-                    current === idx 
-                      ? "w-6 bg-brand-green" 
-                      : "bg-slate-300 dark:bg-slate-700 hover:bg-slate-400"
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-1 text-amber-400">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 fill-amber-400" />
               ))}
             </div>
+            <Quote className="w-8 h-8 text-[var(--card-border)] rotate-180" />
+          </div>
 
-            {/* Arrow keys */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={prevTestimonial}
-                className="w-10 h-10 flex items-center justify-center rounded-full glass-panel border border-slate-300 dark:border-slate-800 hover:text-brand-green hover:scale-105 active:scale-95 transition-all cursor-none"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={nextTestimonial}
-                className="w-10 h-10 flex items-center justify-center rounded-full glass-panel border border-slate-350 dark:border-slate-800 hover:text-brand-green hover:scale-105 active:scale-95 transition-all cursor-none"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+          <blockquote className="text-sm sm:text-base text-[var(--text-primary)] font-medium leading-relaxed italic my-2">
+            &ldquo;{t.quote}&rdquo;
+          </blockquote>
+
+          <div className="flex items-center justify-between mt-6 pt-4 border-t border-[var(--card-border)]">
+            <div>
+              <div className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">
+                {t.author}
+              </div>
+              <div className="text-[11px] text-[var(--text-muted)] font-medium">
+                {t.role} &bull; <span className="text-[var(--secondary-accent)]">{t.company}</span>
+              </div>
             </div>
 
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={prevTestimonial}
+                className="w-9 h-9 rounded-lg border border-[var(--card-border)] bg-[var(--surface-elevated)] hover:bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={nextTestimonial}
+                className="w-9 h-9 rounded-lg border border-[var(--card-border)] bg-[var(--surface-elevated)] hover:bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
         </div>

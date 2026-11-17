@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Send, CheckCircle, X, Globe, GitBranch, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, Globe, GitBranch, ArrowUpRight } from "lucide-react";
 import Logo from "@/components/shared/Logo";
 import emailjs from "@emailjs/browser";
 import { getVisitorMetadata } from "@/utils/visitorTracker";
 
-const EMAILJS_SERVICE_ID = "service_lw030qp";
-const EMAILJS_TEMPLATE_ID = "template_t2r1s1j";
-const EMAILJS_PUBLIC_KEY = "znlhzaw2OQmZ7uVqd";
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_lw030qp";
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_t2r1s1j";
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "znlhzaw2OQmZ7uVqd";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -44,8 +44,7 @@ export default function Footer() {
       setSubscribed(true);
       setEmail("");
       setError("");
-    } catch (err: any) {
-      console.error("Newsletter EmailJS Error:", err);
+    } catch {
       setError("Failed to subscribe. Please try again.");
     }
   };
@@ -55,118 +54,129 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative mt-auto border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#060914] z-10">
-      {/* Background gradients */}
-      <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-brand-blue/5 dark:bg-brand-blue/3 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-brand-green/5 dark:bg-brand-green/3 blur-3xl pointer-events-none" />
-
+    <footer className="relative mt-auto border-t border-[var(--card-border)] bg-[var(--surface-elevated)] text-[var(--text-primary)] z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           
           {/* Column 1: Brand Info */}
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <Link href="/" className="flex items-center gap-2 group w-44">
-              <Logo showText={false} className="w-9 h-9" />
+          <div className="lg:col-span-2 flex flex-col gap-5">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8">
+                <Logo showText={false} className="w-full h-full" />
+              </div>
               <div className="flex flex-col">
-                <span className="text-md font-black tracking-widest text-gradient leading-none">
-                  100SOLUTIONZ
+                <span className="text-base font-black tracking-wider text-[var(--text-primary)] leading-tight">
+                  100<span className="text-[var(--secondary-accent)]">SOLUTIONZ</span>
                 </span>
-                <span className="text-[7px] tracking-[0.2em] font-medium text-slate-500 mt-1 uppercase">
-                  Shape Your Idea
+                <span className="text-[8px] tracking-[0.2em] font-medium text-[var(--text-muted)] uppercase">
+                  Digital Innovation
                 </span>
               </div>
             </Link>
             
-            <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
-              We shape your ideas into premium, production-ready AI solutions, high-performance web products, mobile apps, and scalable cloud architectures. 
+            <p className="text-xs text-[var(--text-secondary)] max-w-sm leading-relaxed">
+              We engineer enterprise-grade AI agents, high-performance web applications, custom mobile experiences, and scalable cloud architectures.
             </p>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5 pt-1">
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full glass-panel border border-slate-300 dark:border-slate-800 hover:text-brand-green hover:scale-105 active:scale-95 transition-all cursor-none"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--card-border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--secondary-accent)] hover:border-[var(--secondary-accent)] transition-all cursor-pointer"
+                aria-label="LinkedIn"
               >
                 <Globe className="w-4 h-4" />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://github.com/a4rehman/100solutionz"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full glass-panel border border-slate-300 dark:border-slate-800 hover:text-brand-blue hover:scale-105 active:scale-95 transition-all cursor-none"
-              >
-                <X className="w-4 h-4" />
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-10 h-10 flex items-center justify-center rounded-full glass-panel border border-slate-300 dark:border-slate-800 hover:text-white hover:scale-105 active:scale-95 transition-all cursor-none"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--card-border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-primary)] transition-all cursor-pointer"
+                aria-label="GitHub Repository"
               >
                 <GitBranch className="w-4 h-4" />
+              </a>
+              <a
+                href="https://100solutionz.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-[var(--card-border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all cursor-pointer"
+                aria-label="Website"
+              >
+                <Globe className="w-4 h-4" />
               </a>
             </div>
           </div>
 
-          {/* Column 2: Quick Links */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200">
+          {/* Column 2: Navigation */}
+          <div className="flex flex-col gap-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">
               Navigation
             </h3>
-            <ul className="flex flex-col gap-2.5 text-sm">
+            <ul className="flex flex-col gap-2 text-xs">
               <li>
-                <Link href="/" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none">Home</Link>
+                <Link href="/" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Home</Link>
               </li>
               <li>
-                <Link href="/about" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none">About Us</Link>
+                <Link href="/about" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">About Us</Link>
               </li>
               <li>
-                <Link href="/services" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none">Services</Link>
+                <Link href="/services" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Services</Link>
               </li>
               <li>
-                <Link href="/portfolio" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none">Portfolio</Link>
+                <Link href="/portfolio" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Portfolio</Link>
               </li>
               <li>
-                <Link href="/careers" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none">Careers</Link>
+                <Link href="/careers" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Careers</Link>
               </li>
             </ul>
           </div>
 
           {/* Column 3: Services */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200">
-              Services
+          <div className="flex flex-col gap-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">
+              Solutions
             </h3>
-            <ul className="flex flex-col gap-2.5 text-sm">
+            <ul className="flex flex-col gap-2 text-xs">
               <li>
-                <Link href="/services?tab=ai" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none flex items-center gap-1">AI & ML <ArrowUpRight className="w-3 h-3 opacity-50" /></Link>
+                <Link href="/services?tab=ai" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  AI & ML <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <Link href="/services?tab=web" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none flex items-center gap-1">Web Development <ArrowUpRight className="w-3 h-3 opacity-50" /></Link>
+                <Link href="/services?tab=web" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  Web & SaaS <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <Link href="/services?tab=mobile" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none flex items-center gap-1">Mobile Development <ArrowUpRight className="w-3 h-3 opacity-50" /></Link>
+                <Link href="/services?tab=mobile" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  Mobile Apps <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <Link href="/services?tab=data" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none flex items-center gap-1">Data Science <ArrowUpRight className="w-3 h-3 opacity-50" /></Link>
+                <Link href="/services?tab=data" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  Data Science <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </Link>
               </li>
               <li>
-                <Link href="/services?tab=cloud" className="text-slate-500 dark:text-slate-400 hover:text-brand-green transition-colors cursor-none flex items-center gap-1">Cloud & DevOps <ArrowUpRight className="w-3 h-3 opacity-50" /></Link>
+                <Link href="/services?tab=cloud" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  Cloud & DevOps <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Newsletter & Info */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-sm font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200">
-              Newsletter
+          {/* Column 4: Newsletter */}
+          <div className="flex flex-col gap-3">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">
+              Stay Updated
             </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 leading-normal">
-              Subscribe to receive insights into AI agents, software updates, and technology trends.
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+              Engineering insights on agentic AI, software architecture, and modern tech.
             </p>
             
-            <form onSubmit={handleSubscribe} className="relative flex items-center mt-2">
+            <form onSubmit={handleSubscribe} className="relative flex items-center mt-1">
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -176,33 +186,34 @@ export default function Footer() {
                   setError("");
                 }}
                 disabled={subscribed}
-                className="w-full px-4 py-2.5 rounded-full text-xs bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 focus:outline-none focus:border-brand-green transition-colors pr-10 text-slate-800 dark:text-slate-200 cursor-none"
+                className="w-full px-3 py-2 text-xs rounded-lg bg-[var(--surface)] border border-[var(--input-border)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] pr-9 cursor-text"
+                aria-label="Newsletter email address"
               />
               <button
                 type="submit"
                 disabled={subscribed}
-                className="absolute right-1 w-8 h-8 rounded-full bg-brand-green hover:bg-brand-green/90 text-slate-900 flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 cursor-none"
-                aria-label="Subscribe"
+                className="absolute right-1 w-7 h-7 rounded-md bg-[var(--accent)] text-[var(--accent-foreground)] hover:bg-[var(--accent-hover)] flex items-center justify-center transition-all cursor-pointer disabled:opacity-50"
+                aria-label="Subscribe to newsletter"
               >
-                <Send className="w-3.5 h-3.5" />
+                <Send className="w-3 h-3" />
               </button>
             </form>
 
             <AnimatePresence mode="wait">
               {subscribed && (
                 <motion.div
-                  initial={{ opacity: 0, y: 5 }}
+                  initial={{ opacity: 0, y: 3 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="flex items-center gap-1.5 text-xs text-brand-green font-medium mt-1"
+                  className="flex items-center gap-1.5 text-xs text-[var(--accent)] font-semibold mt-1"
                 >
-                  <CheckCircle className="w-4 h-4" />
+                  <CheckCircle className="w-3.5 h-3.5" />
                   Successfully subscribed!
                 </motion.div>
               )}
               {error && (
                 <motion.div
-                  initial={{ opacity: 0, y: 5 }}
+                  initial={{ opacity: 0, y: 3 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className="text-xs text-rose-500 font-medium mt-1"
@@ -215,36 +226,36 @@ export default function Footer() {
 
         </div>
 
-        {/* BOTTOM METRICS/CONTACT ROW */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-12 mt-12 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+        {/* BOTTOM CONTACT ROW */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-10 mt-10 border-t border-[var(--card-border)] text-xs text-[var(--text-secondary)]">
           <div className="flex items-center gap-2">
-            <Mail className="w-4 h-4 text-brand-green" />
-            <a href="mailto:live40220@gmail.com" className="hover:text-brand-green transition-colors cursor-none">
+            <Mail className="w-4 h-4 text-[var(--accent)]" />
+            <a href="mailto:live40220@gmail.com" className="hover:text-[var(--accent)] transition-colors">
               live40220@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-brand-blue" />
-            <a href="tel:+15550199" className="hover:text-brand-blue transition-colors cursor-none">
+            <Phone className="w-4 h-4 text-[var(--secondary-accent)]" />
+            <a href="tel:+15550199100" className="hover:text-[var(--secondary-accent)] transition-colors">
               +1 (555) 019-9100
             </a>
           </div>
           <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-brand-green" />
-            <span>Silicon Valley, CA & Lahore, Pakistan</span>
+            <MapPin className="w-4 h-4 text-[var(--accent)]" />
+            <span>Silicon Valley, CA &bull; Lahore, Pakistan</span>
           </div>
         </div>
 
-        {/* COPYRIGHT & CREDITS */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-8 border-t border-slate-200/50 dark:border-slate-800/40 text-[10px] text-slate-500 dark:text-slate-500">
+        {/* COPYRIGHT & LEGAL */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-[var(--card-border)] text-[11px] text-[var(--text-muted)]">
           <div>
             &copy; {new Date().getFullYear()} 100Solutionz. All rights reserved.
           </div>
-          <div className="flex items-center gap-6">
-            <a href="#" className="hover:underline cursor-none">Privacy Policy</a>
-            <a href="#" className="hover:underline cursor-none">Terms of Service</a>
-            <button onClick={openCalendly} className="text-brand-green hover:underline cursor-none font-semibold">
-              Free Consultation
+          <div className="flex items-center gap-5">
+            <Link href="/about" className="hover:underline">About Company</Link>
+            <Link href="/contact" className="hover:underline">Contact</Link>
+            <button type="button" onClick={openCalendly} className="text-[var(--accent)] hover:underline font-semibold cursor-pointer">
+              Schedule Consultation
             </button>
           </div>
         </div>

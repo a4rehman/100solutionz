@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import CursorEffect from "@/components/shared/CursorEffect";
 import ParticleBackground from "@/components/shared/ParticleBackground";
 import LoadingScreen from "@/components/shared/LoadingScreen";
 import WhatsAppCTA from "@/components/shared/WhatsAppCTA";
@@ -37,6 +36,23 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `
+  (function() {
+    try {
+      var saved = localStorage.getItem('theme');
+      var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      var theme = saved || (prefersLight ? 'light' : 'dark');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = 'dark';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
+      }
+    } catch (e) {}
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,31 +65,29 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <JsonLd />
       </head>
-      <body className="min-h-full flex flex-col bg-slate-50 dark:bg-[#0B1020] text-slate-900 dark:text-slate-100 transition-colors duration-500">
+      <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--text-primary)]">
         <ThemeProvider>
-          {/* Page Loading Screen */}
+          {/* Subtle Page Loading Screen (Theme Aware, Session Capped) */}
           <LoadingScreen />
           
-          {/* Custom Trail Cursor */}
-          <CursorEffect />
-          
-          {/* Animated Canvas Particles */}
+          {/* Performance Optimized Ambient Particles */}
           <ParticleBackground />
           
           {/* Sticky Navigation Bar */}
           <Navbar />
           
           {/* Content Main Area */}
-          <main className="flex-grow pt-[70px] relative z-10 flex flex-col">
+          <main className="flex-grow pt-[72px] relative z-10 flex flex-col">
             {children}
           </main>
           
           {/* Shared Site Footer */}
           <Footer />
           
-          {/* Floating Actions */}
+          {/* Interactive Modals and Actions */}
           <WhatsAppCTA />
           <ChatWidget />
           <CalendlyModal />

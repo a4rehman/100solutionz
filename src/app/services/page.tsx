@@ -1,96 +1,92 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Code, Smartphone, BarChart3, Cloud, Check, Cpu, Terminal, Layers } from "lucide-react";
+import { Sparkles, Code, Smartphone, BarChart3, Cloud, Check, ArrowRight, Calendar } from "lucide-react";
 
 const serviceDetails = [
   {
     id: "ai",
     label: "AI & Machine Learning",
     icon: Sparkles,
-    title: "Enterprise Artificial Intelligence & Automation Systems",
-    tagline: "Supercharge workflows with semantic indexing, natural dialogue, and autonomous workflows.",
+    title: "Enterprise Artificial Intelligence & Autonomous Systems",
+    tagline: "Supercharge workflows with semantic indexing, natural dialogue, and autonomous agent loops.",
     subServices: [
-      { name: "AI Chatbots & Assistants", desc: "Customer support bots that retrieve info, execute actions, and maintain state." },
-      { name: "RAG (Retrieval-Augmented Gen) Systems", desc: "Connect LLMs safely to your corporate documentation database without training costs." },
-      { name: "Agentic AI Orchestrations", desc: "Multi-agent pipelines that self-correct, plan complex tasks, and run tasks autonomously." },
-      { name: "Computer Vision Applications", desc: "Object recognition, image processing, and video analytics for logistics/medical domains." },
-      { name: "NLP (Natural Language Processing)", desc: "Entity extraction, sentiment classification, auto-categorization, and data translation." }
+      { name: "Autonomous AI Agents", desc: "Multi-agent pipelines that retrieve data, execute external APIs, and self-correct." },
+      { name: "Enterprise RAG Architectures", desc: "Connect LLMs safely to your corporate databases and documentation with zero training leakage." },
+      { name: "Fine-Tuned Domain Models", desc: "Custom model weights optimized for domain terminology, compliance, and reduced inference cost." },
+      { name: "Computer Vision & OCR", desc: "Document entity parsing, contract analysis, and real-time visual inspection." },
+      { name: "Natural Language Processing (NLP)", desc: "Sentiment analysis, entity extraction, auto-summarization, and multi-lingual translation." }
     ],
-    tech: ["GPT-4o", "Claude 3.5 Sonnet", "LangChain", "Pinecone", "LlamaIndex", "FastAPI"],
-    accent: "text-brand-green border-brand-green/30 bg-brand-green/5"
+    tech: ["GPT-4o", "Claude 3.5 Sonnet", "LangChain", "LlamaIndex", "Pinecone", "Qdrant", "FastAPI"],
+    color: "text-[var(--accent)]"
   },
   {
     id: "web",
-    label: "Web Development",
+    label: "Web & SaaS Development",
     icon: Code,
-    title: "Premium Responsive Websites & Custom SaaS Systems",
+    title: "High-Performance Web Platforms & SaaS Architectures",
     tagline: "Scalable frontend structures combined with high-throughput database endpoints.",
     subServices: [
-      { name: "SaaS Platform Architectures", desc: "Multi-tenant dashboards, stripe subscription portals, and custom usage trackers." },
-      { name: "Business Websites", desc: "Highly polished promotional landing pages with visual effects, fast load speeds, and complete SEO." },
-      { name: "E-Commerce Solutions", desc: "Custom checkout systems, multi-currency support, order sync channels, and headless Shopify engines." }
+      { name: "Multi-Tenant SaaS Dashboards", desc: "Subscription billing, team organizations, usage analytics, and role-based permissions." },
+      { name: "Corporate & Marketing Portals", desc: "Fast-loading landing experiences with modern typography, dynamic animations, and complete SEO." },
+      { name: "Custom E-Commerce Engines", desc: "Multi-currency checkout pipelines, automated warehouse sync, and headless architectures." }
     ],
-    tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS v4", "Node.js", "PostgreSQL"],
-    accent: "text-brand-blue border-brand-blue/30 bg-brand-blue/5"
+    tech: ["Next.js 16 (Turbopack)", "React 19", "TypeScript", "Tailwind CSS v4", "Node.js", "PostgreSQL"],
+    color: "text-[var(--secondary-accent)]"
   },
   {
     id: "mobile",
     label: "Mobile Development",
     icon: Smartphone,
-    title: "High-Performance iOS & Android Mobile Apps",
+    title: "Native & Cross-Platform Mobile Applications",
     tagline: "Fluid gesture tracking, offline synchronization, and native ecosystem integrations.",
     subServices: [
-      { name: "Native iOS Engineering", desc: "SwiftUI-based applications optimized for Apple performance, widgets, and push syncs." },
-      { name: "Native Android Engineering", desc: "Kotlin-based systems built with clean materials standards and robust background processes." },
-      { name: "Cross-Platform Frameworks", desc: "Highly efficient React Native or Flutter setups to target both systems with one codebase." }
+      { name: "Native iOS Applications", desc: "Swift & SwiftUI engineering optimized for performance, widgets, and background sync." },
+      { name: "Native Android Applications", desc: "Kotlin architectures built with modern Material guidelines and robust services." },
+      { name: "Cross-Platform Frameworks", desc: "High-efficiency React Native or Flutter setups to target iOS and Android with unified code." }
     ],
-    tech: ["React Native", "Flutter", "SwiftUI / Kotlin", "Firebase", "SQLite", "GraphQL"],
-    accent: "text-cyan-400 border-cyan-400/30 bg-cyan-400/5"
+    tech: ["React Native", "Flutter", "SwiftUI", "Kotlin", "Firebase", "SQLite", "GraphQL"],
+    color: "text-emerald-500"
   },
   {
     id: "data",
-    label: "Data Science",
+    label: "Data Science & BI",
     icon: BarChart3,
     title: "Advanced Business Intelligence & Predictive Analytics",
     tagline: "Aggregate unstructured events into metrics boards and predictive analytics models.",
     subServices: [
-      { name: "Interactive Business Dashboards", desc: "React-based analytics visual decks connecting directly to internal server databases." },
-      { name: "Predictive Forecasting Models", desc: "Statistical regressions, trends modeling, and customer churn forecast math models." },
-      { name: "Data Pipeline Orchestrations", desc: "Clean ETL maps to parse, filter, and index database entries into cloud data pools." }
+      { name: "Interactive Business Dashboards", desc: "React analytics visual decks connecting directly to internal server databases." },
+      { name: "Predictive Analytics & Forecasting", desc: "Machine learning algorithms modeling customer churn, revenue projections, and demand." },
+      { name: "Automated Data Ingestion Pipelines", desc: "Scrapers and ETL data channels compiling disparate databases into unified lakes." }
     ],
-    tech: ["Python / Pandas", "Apache Spark", "BigQuery", "Tableau / Looker", "SciKit-Learn", "PostgreSQL"],
-    accent: "text-indigo-400 border-indigo-400/30 bg-indigo-400/5"
+    tech: ["Python", "Pandas & NumPy", "Apache Kafka", "PostgreSQL", "Snowflake", "Chart.js"],
+    color: "text-amber-500"
   },
   {
     id: "cloud",
     label: "Cloud & DevOps",
     icon: Cloud,
-    title: "Scalable Cloud Hosting & Automated Deployment Systems",
+    title: "Scalable Cloud Hosting & Automated CI/CD Infrastructure",
     tagline: "Infrastructure as Code, dockerized containers, and horizontal auto-scalers.",
     subServices: [
-      { name: "Cloud Architectures (AWS / GCP / Azure)", desc: "High-availability networks, serverless edge functions, and secure firewalls." },
-      { name: "DevOps CI/CD Automation", desc: "GitHub actions, docker container registers, and automated unit testing steps." },
-      { name: "Kubernetes Container Clustering", desc: "Self-healing docker stacks with dynamic ingress routing and low memory footprints." }
+      { name: "Cloud Architecture (AWS / GCP / Azure)", desc: "High-availability networks, serverless edge functions, and secure firewalls." },
+      { name: "DevOps CI/CD Automation", desc: "GitHub Actions, automated test runs, linting gates, and zero-downtime releases." },
+      { name: "Kubernetes Container Clustering", desc: "Self-healing Docker stacks with dynamic ingress routing and resource caps." }
     ],
-    tech: ["AWS EKS / EC2 / RDS", "Docker & Kubernetes", "Terraform", "GitHub Actions", "Nginx", "Prometheus"],
-    accent: "text-sky-400 border-sky-400/30 bg-sky-400/5"
+    tech: ["AWS (EKS, RDS, S3)", "Google Cloud", "Docker & Kubernetes", "Terraform", "GitHub Actions"],
+    color: "text-sky-500"
   }
 ];
 
 function ServicesPageContent() {
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState("ai");
+  const tabParam = searchParams.get("tab");
+  const initialTab = (tabParam && serviceDetails.some((s) => s.id === tabParam)) ? tabParam : "ai";
+  const [selectedTab, setSelectedTab] = useState<string>(initialTab);
 
-  useEffect(() => {
-    const tabParam = searchParams.get("tab");
-    if (tabParam && serviceDetails.some((s) => s.id === tabParam)) {
-      setActiveTab(tabParam);
-    }
-  }, [searchParams]);
-
+  const activeTab = serviceDetails.some((s) => s.id === selectedTab) ? selectedTab : initialTab;
   const activeSrv = serviceDetails.find((s) => s.id === activeTab) || serviceDetails[0];
 
   const openCalendly = () => {
@@ -100,134 +96,128 @@ function ServicesPageContent() {
   return (
     <div className="flex flex-col w-full relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
-      {/* 1. HEADER DESCRIPTION */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <span className="text-xs uppercase font-black tracking-widest text-brand-green">
-          Our Offerings
+      {/* 1. Header */}
+      <div className="text-center max-w-3xl mx-auto mb-14">
+        <span className="text-xs uppercase font-bold tracking-widest text-[var(--accent)]">
+          Engineering Capabilities
         </span>
-        <h1 className="text-4xl font-black text-slate-900 dark:text-white mt-2 tracking-tight">
-          Next-Generation <span className="text-gradient">Engineering Services</span>
+        <h1 className="text-3xl sm:text-5xl font-black text-[var(--text-primary)] mt-2 tracking-tight">
+          Next-Generation <span className="text-gradient">Digital Solutions</span>
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed font-medium">
-          Whether you need a dedicated development team to architect a new SaaS application or an AI specialist to design autonomous agent workflows, we provide solutions that deliver results.
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-3 leading-relaxed">
+          Whether you need an autonomous agent team, a multi-tenant SaaS application, or enterprise cloud autoscaling, our senior engineering studio builds products that deliver measurable business impact.
         </p>
       </div>
 
-      {/* 2. TABS NAVIGATION */}
-      <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12 border-b border-slate-200 dark:border-slate-800 pb-6">
+      {/* 2. Tabs */}
+      <div className="flex flex-wrap justify-center gap-2 mb-10 border-b border-[var(--card-border)] pb-5">
         {serviceDetails.map((s) => {
           const isActive = activeTab === s.id;
           return (
             <button
+              type="button"
               key={s.id}
-              onClick={() => setActiveTab(s.id)}
-              className={`relative px-5 py-3 rounded-2xl text-xs font-bold transition-all cursor-none flex items-center gap-2 border ${
+              onClick={() => setSelectedTab(s.id)}
+              className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 border ${
                 isActive
-                  ? "text-brand-green border-brand-green/35 bg-brand-green/5 font-black"
-                  : "text-slate-600 dark:text-slate-450 border-slate-200 dark:border-slate-850 hover:bg-slate-100 dark:hover:bg-slate-900/60"
+                  ? "bg-[var(--accent)] text-[var(--accent-foreground)] border-[var(--accent)] shadow-xs"
+                  : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--card-border)] hover:bg-[var(--surface-elevated)] hover:text-[var(--text-primary)]"
               }`}
             >
-              <s.icon className="w-4.5 h-4.5" />
-              {s.label}
+              <s.icon className="w-4 h-4" />
+              <span>{s.label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* 3. ACTIVE SERVICE SPECIFICATION DISPLAY */}
-      <div className="min-h-[400px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"
-          >
-            
-            {/* Left Column: Detail card */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+      {/* 3. Active Service Detail View */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeSrv.id}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+          className="rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-6 sm:p-10 shadow-md"
+        >
+          {/* Service Title Bar */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[var(--card-border)]">
+            <div className="flex items-start gap-4">
+              <div className={`p-3 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] ${activeSrv.color}`}>
+                <activeSrv.icon className="w-6 h-6" />
+              </div>
               <div>
-                <span className="text-[10px] font-bold text-brand-green uppercase tracking-widest">
-                  Service Category Overview
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-black mt-2 leading-tight">
+                <h2 className="text-lg sm:text-2xl font-black text-[var(--text-primary)]">
                   {activeSrv.title}
                 </h2>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium leading-relaxed italic">
-                  &ldquo;{activeSrv.tagline}&rdquo;
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1 font-medium">
+                  {activeSrv.tagline}
                 </p>
               </div>
+            </div>
 
-              {/* Sub-services mapping */}
-              <div className="grid gap-4 mt-2">
-                {activeSrv.subServices.map((sub) => (
-                  <div
-                    key={sub.name}
-                    className="p-5 rounded-2xl glass-panel border border-slate-200/50 dark:border-slate-850 bg-slate-100/30 dark:bg-[#0c1224]/30 hover:border-slate-350 dark:hover:border-slate-700 transition-all flex gap-3.5"
-                  >
-                    <div className="w-5 h-5 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-3 h-3" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-black text-slate-900 dark:text-white">
-                        {sub.name}
-                      </h4>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-450 mt-1 leading-normal font-medium">
-                        {sub.desc}
-                      </p>
-                    </div>
+            <button
+              type="button"
+              onClick={openCalendly}
+              className="px-5 py-2.5 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] hover:bg-[var(--accent-hover)] font-bold text-xs transition-all cursor-pointer shadow-xs flex items-center gap-1.5 shrink-0 self-start md:self-auto"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              Consult on {activeSrv.label.split(" ")[0]}
+            </button>
+          </div>
+
+          {/* Sub-Services Grid */}
+          <div className="mt-8">
+            <h3 className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)] mb-4">
+              Key Architecture &amp; Delivery Pillars
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {activeSrv.subServices.map((sub) => (
+                <div
+                  key={sub.name}
+                  className="p-4 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] flex items-start gap-3"
+                >
+                  <div className="p-1 rounded-md bg-[var(--surface-muted)] text-[var(--accent)] shrink-0 mt-0.5">
+                    <Check className="w-3.5 h-3.5" />
                   </div>
-                ))}
-              </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">
+                      {sub.name}
+                    </h4>
+                    <p className="text-[11px] text-[var(--text-secondary)] mt-0.5 leading-relaxed">
+                      {sub.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Technology Badges */}
+          <div className="mt-8 pt-6 border-t border-[var(--card-border)] flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-bold text-[var(--text-primary)] mr-2">Technologies Used:</span>
+              {activeSrv.tech.map((t) => (
+                <span
+                  key={t}
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-semibold bg-[var(--surface-muted)] text-[var(--text-secondary)] border border-[var(--card-border)]"
+                >
+                  {t}
+                </span>
+              ))}
             </div>
 
-            {/* Right Column: Technology, Process, Conversion */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
-              
-              {/* Tech Stack card */}
-              <div className="p-6 rounded-2xl glass-panel border border-slate-200/50 dark:border-slate-850 bg-slate-100/50 dark:bg-[#0c1224]/30 shadow-md">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-1.5">
-                  <Terminal className="w-4 h-4 text-brand-blue" />
-                  Primary Technologies
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {activeSrv.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10px] font-bold px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300/30 dark:border-slate-800 text-slate-800 dark:text-slate-250"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Consultation booking prompt */}
-              <div className="p-6 rounded-2xl glass-panel border border-slate-200/50 dark:border-brand-green/10 shadow-lg relative overflow-hidden bg-gradient-to-br from-brand-green/5 to-brand-blue/5">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-green/10 rounded-full blur-2xl pointer-events-none" />
-                <h3 className="text-sm font-black text-slate-900 dark:text-white">
-                  Need a custom integration?
-                </h3>
-                <p className="text-[11px] text-slate-550 dark:text-slate-400 mt-2.5 leading-relaxed font-medium">
-                  Whether you have strict enterprise protocols, require integration with a specific ERP, or want to discuss scaling bandwidth for millions of active requests, we can help.
-                </p>
-                <div className="mt-6">
-                  <button
-                    onClick={openCalendly}
-                    className="w-full py-3 text-center rounded-xl bg-gradient-to-r from-brand-green to-brand-blue text-white font-bold text-xs shadow-md hover:scale-102 transition-transform cursor-none"
-                  >
-                    Discuss project parameters
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-          </motion.div>
-        </AnimatePresence>
-      </div>
+            <button
+              type="button"
+              onClick={openCalendly}
+              className="text-xs font-bold text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              Request Custom Blueprint <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
     </div>
   );
@@ -235,11 +225,7 @@ function ServicesPageContent() {
 
 export default function ServicesPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center text-xs text-slate-500">
-        Loading services catalog...
-      </div>
-    }>
+    <Suspense fallback={<div className="py-20 text-center text-xs text-[var(--text-muted)]">Loading services...</div>}>
       <ServicesPageContent />
     </Suspense>
   );

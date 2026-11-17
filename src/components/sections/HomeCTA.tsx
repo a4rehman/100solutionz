@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Mail, ShieldCheck } from "lucide-react";
 
 export default function HomeCTA() {
   const openCalendly = () => {
@@ -10,56 +9,52 @@ export default function HomeCTA() {
   };
 
   return (
-    <section className="py-20 relative z-10 px-4 sm:px-6 lg:px-8">
-      {/* Background radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-brand-green/5 dark:bg-brand-green/2 blur-3xl pointer-events-none" />
-
-      <div className="max-w-5xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative rounded-3xl glass-panel p-8 md:p-16 border border-slate-200/50 dark:border-brand-green/15 shadow-2xl overflow-hidden bg-gradient-to-r from-slate-100/50 to-slate-200/20 dark:from-[#0B1020]/90 dark:to-[#0f172a]/60"
-        >
-          {/* Neon side accents */}
-          <div className="absolute top-0 left-0 w-2 h-full bg-brand-green opacity-40" />
-          <div className="absolute bottom-0 right-0 w-2 h-full bg-brand-blue opacity-40" />
-
-          {/* Sparkle icon */}
-          <div className="inline-flex p-3 rounded-full bg-brand-green/10 text-brand-green mb-6 animate-pulse">
-            <Sparkles className="w-6 h-6" />
+    <section className="py-20 relative z-10 px-4 sm:px-6 lg:px-8 bg-[var(--surface-elevated)] border-t border-[var(--card-border)]">
+      <div className="max-w-4xl mx-auto text-center">
+        <div className="rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-8 sm:p-14 shadow-lg">
+          
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--selection-bg)] text-[var(--accent)] text-xs font-bold mb-5">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Ready to Elevate Your Technology?</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-            Ready to <span className="text-gradient">Shape Your Idea</span>?
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[var(--text-primary)] tracking-tight leading-tight">
+            Let&apos;s Build Something <span className="text-gradient">Extraordinary</span> Together.
           </h2>
           
-          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-4 max-w-xl mx-auto leading-relaxed font-medium">
-            Talk directly to our lead engineers. Get a technical product roadmap, database feasibility check, and project timeline estimation &mdash; completely free.
+          <p className="text-xs sm:text-base text-[var(--text-secondary)] mt-4 max-w-xl mx-auto leading-relaxed">
+            Schedule a technical roadmapping call with our engineering leadership. We&apos;ll evaluate your architecture, discuss AI feasibility, and map out a delivery timeline.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
             <button
+              type="button"
               onClick={openCalendly}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-brand-green to-brand-blue text-white font-bold text-sm shadow-[0_4px_20px_rgba(74,222,42,0.3)] hover:shadow-[0_6px_28px_rgba(74,222,42,0.4)] hover:scale-103 active:scale-98 transition-all cursor-none flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs sm:text-sm hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-md flex items-center justify-center gap-2 group"
             >
-              Book Consultation Session
-              <ArrowRight className="w-4 h-4" />
+              Schedule Technical Consultation
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <a
               href="mailto:live40220@gmail.com"
-              className="w-full sm:w-auto px-8 py-4 rounded-full glass-panel border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-sm font-bold hover:bg-slate-100 dark:hover:bg-slate-900/50 transition-all hover:scale-103 active:scale-98 cursor-none flex items-center justify-center gap-1.5"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl border border-[var(--card-border)] bg-[var(--surface-elevated)] hover:bg-[var(--surface-muted)] text-[var(--text-primary)] text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center justify-center gap-2"
             >
+              <Mail className="w-4 h-4 text-[var(--secondary-accent)]" />
               live40220@gmail.com
             </a>
           </div>
 
-          {/* Footer note */}
-          <p className="text-[10px] text-slate-450 dark:text-slate-500 mt-6 tracking-wide uppercase font-bold">
-            No obligation &bull; 100% Confidential NDAs signed on request
-          </p>
-        </motion.div>
+          <div className="mt-8 pt-6 border-t border-[var(--card-border)] flex flex-wrap items-center justify-center gap-6 text-[11px] text-[var(--text-muted)] font-medium">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[var(--accent)]" /> 100% Confidential NDAs
+            </span>
+            <span>&bull;</span>
+            <span>No Obligation Architecture Review</span>
+            <span>&bull;</span>
+            <span>Direct Access to Senior Engineers</span>
+          </div>
+
+        </div>
       </div>
     </section>
   );

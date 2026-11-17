@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 
 interface StatItemProps {
   value: number;
@@ -20,7 +20,7 @@ function Counter({ value, suffix, label, desc }: StatItemProps) {
 
     let start = 0;
     const end = value;
-    const duration = 2000; // 2 seconds
+    const duration = 1200;
     const incrementTime = Math.max(10, Math.floor(duration / end));
 
     const timer = setInterval(() => {
@@ -36,19 +36,17 @@ function Counter({ value, suffix, label, desc }: StatItemProps) {
   }, [isInView, value]);
 
   return (
-    <div ref={ref} className="flex flex-col items-center text-center p-6 rounded-2xl glass-panel border border-slate-200/50 dark:border-brand-green/5 shadow-md relative group hover:scale-[1.02] transition-transform duration-300">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-green/5 to-brand-blue/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
-      <span className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight flex items-baseline">
-        <span className="text-gradient">{count}</span>
-        <span className="text-brand-blue font-extrabold">{suffix}</span>
+    <div ref={ref} className="flex flex-col items-center text-center p-6 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-xs">
+      <span className="text-3xl sm:text-4xl font-extrabold text-[var(--text-primary)] tracking-tight flex items-baseline">
+        <span>{count}</span>
+        <span className="text-[var(--accent)] font-extrabold ml-0.5">{suffix}</span>
       </span>
       
-      <span className="text-sm font-bold mt-2.5 text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+      <span className="text-xs font-bold mt-2 text-[var(--text-primary)] uppercase tracking-wider">
         {label}
       </span>
       
-      <span className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 max-w-[200px] leading-relaxed">
+      <span className="text-[11px] text-[var(--text-muted)] mt-1 max-w-[220px] leading-relaxed">
         {desc}
       </span>
     </div>
@@ -57,32 +55,34 @@ function Counter({ value, suffix, label, desc }: StatItemProps) {
 
 export default function Stats() {
   return (
-    <section className="py-16 relative z-10 px-4 sm:px-6 lg:px-8 bg-slate-100/30 dark:bg-[#080d1a]/20 border-y border-slate-250/30 dark:border-slate-850/30">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-        <Counter
-          value={150}
-          suffix="+"
-          label="Projects Delivered"
-          desc="Web applications, SaaS backends, and AI pipelines launched successfully."
-        />
-        <Counter
-          value={99}
-          suffix="%"
-          label="Client Satisfaction"
-          desc="Startups and enterprises returning to scale their products with us."
-        />
-        <Counter
-          value={10}
-          suffix="M+"
-          label="AI Requests Run"
-          desc="High-load API predictions, agents, and RAG vector searches executed."
-        />
-        <Counter
-          value={25}
-          suffix="+"
-          label="Tech Experts"
-          desc="Senior developers, AI engineers, and Cloud architects on demand."
-        />
+    <section className="py-16 relative z-10 px-4 sm:px-6 lg:px-8 bg-[var(--background)]">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <Counter
+            value={50}
+            suffix="+"
+            label="Digital Deployments"
+            desc="AI agents, SaaS tools, and web platforms successfully deployed."
+          />
+          <Counter
+            value={99}
+            suffix="%"
+            label="Sprint Completion"
+            desc="Features and user stories delivered strictly within scheduled milestones."
+          />
+          <Counter
+            value={45}
+            suffix="s"
+            label="AI Resolution Time"
+            desc="Average latency for automated AI customer support ticket triage."
+          />
+          <Counter
+            value={100}
+            suffix="%"
+            label="Code Ownership"
+            desc="Clients own 100% of IP, repositories, licenses, and documentation."
+          />
+        </div>
       </div>
     </section>
   );

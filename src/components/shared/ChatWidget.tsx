@@ -2,13 +2,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Sparkles } from "lucide-react";
+import { MessageSquare, X, Send, Sparkles, Bot, User } from "lucide-react";
 
 interface Message {
   id: string;
   sender: "bot" | "user";
   text: string;
-  timestamp: Date;
+  time: string;
 }
 
 const quickReplies = [
@@ -20,24 +20,19 @@ const quickReplies = [
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const idCounterRef = useRef(1);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "welcome",
+      sender: "bot",
+      text: "Hi there! 👋 I am SolutionzAI, your digital assistant. How can we help you shape your idea today?",
+      time: "Just now",
+    },
+  ]);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Initialize with welcome message
-  useEffect(() => {
-    setMessages([
-      {
-        id: "welcome",
-        sender: "bot",
-        text: "Hi there! 👋 I am SolutionzAI, your digital assistant. How can I help you shape your idea today?",
-        timestamp: new Date(),
-      },
-    ]);
-  }, []);
-
-  // Scroll to bottom on messages change
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -47,169 +42,185 @@ export default function ChatWidget() {
   const botReply = (query: string) => {
     setIsTyping(true);
     
-    // Simulate thinking delay
     setTimeout(() => {
-      let replyText = "I'm not sure I fully understand, but I can tell you that 100Solutionz specializes in AI Agents, RAG Applications, Web SaaS, Mobile apps, and Cloud DevOps. Feel free to contact our support at live40220@gmail.com!";
+      let replyText = "I can help connect you with our lead engineers! 100Solutionz specializes in Autonomous AI Agents, Enterprise RAG, Web & SaaS Platforms, and Mobile Apps. Would you like to schedule a consultation?";
       const q = query.toLowerCase();
 
       if (q.includes("ai") || q.includes("chatbot") || q.includes("rag") || q.includes("agent")) {
-        replyText = "At 100Solutionz, our AI division builds enterprise AI Agents, Retrieval-Augmented Generation (RAG) systems, voice automation, and custom LLM integrations. Explore our 'AI Solutions' page for interactive demos!";
+        replyText = "Our AI division architects enterprise AI Agents, RAG systems, voice automation, and custom model deployments. Check out our 'AI Solutions' page for interactive agent demos!";
       } else if (q.includes("quote") || q.includes("pricing") || q.includes("cost") || q.includes("consultation")) {
-        replyText = "We offer free initial consultations! Click the 'Get Free Consultation' button at the top of the page to schedule a direct slot on our calendar, or fill out the form on our Contact Page.";
+        replyText = "We offer free initial architectural consultations! Click 'Book Consultation' in the top navigation or use our Contact page to speak directly with an engineering lead.";
       } else if (q.includes("portfolio") || q.includes("project") || q.includes("work")) {
-        replyText = "Our portfolio highlights AI Chatbots, Medical AI platforms, custom E-commerce, and SaaS dashboards. Check out our 'Portfolio' page to see detailed case studies and tech stacks used!";
-      } else if (q.includes("human") || q.includes("speak") || q.includes("support") || q.includes("contact")) {
-        replyText = "I have flagged our sales team! You can reach a human technical advisor instantly via phone at +1 (555) 019-9100 or email us directly at live40220@gmail.com.";
-      } else if (q.includes("career") || q.includes("job") || q.includes("hiring")) {
-        replyText = "We are always looking for talented AI Engineers, React Developers, and Cloud Specialists! Head over to our 'Careers' page to see active positions and submit an application.";
-      } else if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
-        replyText = "Hello! How can we help you create or scale your software product today?";
+        replyText = "Our portfolio includes autonomous support agents, medical intelligence systems, fintech mobile apps, and custom SaaS platforms. Explore our 'Portfolio' tab for case studies!";
+      } else if (q.includes("human") || q.includes("contact") || q.includes("email") || q.includes("phone")) {
+        replyText = "You can reach our team directly at live40220@gmail.com or call +1 (555) 019-9100. We typically respond within 2 business hours.";
       }
 
       setMessages((prev) => [
         ...prev,
         {
-          id: Math.random().toString(),
+          id: `bot-${idCounterRef.current++}`,
           sender: "bot",
           text: replyText,
-          timestamp: new Date(),
+          time: "Just now",
         },
       ]);
       setIsTyping(false);
-    }, 1000);
+    }, 700);
   };
 
-  const handleSend = (textToSend: string) => {
-    if (!textToSend.trim()) return;
+  const handleSend = (textToSend?: string) => {
+    const text = (textToSend || inputText).trim();
+    if (!text) return;
 
-    // Add user message
     const userMsg: Message = {
-      id: Math.random().toString(),
+      id: `user-${idCounterRef.current++}`,
       sender: "user",
-      text: textToSend,
-      timestamp: new Date(),
+      text,
+      time: "Just now",
     };
 
     setMessages((prev) => [...prev, userMsg]);
     setInputText("");
-    botReply(textToSend);
+    botReply(text);
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-[40]">
-      {/* Floating Trigger Bubble */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-slate-950 dark:bg-slate-900 border border-slate-350 dark:border-brand-green/20 text-brand-green flex items-center justify-center shadow-lg hover:scale-108 active:scale-95 transition-all relative cursor-none"
-        aria-label="Open support chat"
-      >
-        <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-brand-green border-2 border-slate-950 animate-pulse" />
-        <MessageSquare className="w-6 h-6" />
-      </button>
+    <div className="fixed bottom-6 right-6 z-40 select-none">
+      {/* Floating Trigger Button */}
+      {!isOpen && (
+        <motion.button
+          type="button"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          onClick={() => setIsOpen(true)}
+          className="w-13 h-13 rounded-full bg-[var(--surface-elevated)] border border-[var(--card-border)] text-[var(--secondary-accent)] flex items-center justify-center shadow-lg hover:border-[var(--secondary-accent)] hover:scale-105 active:scale-95 transition-all cursor-pointer relative"
+          aria-label="Open chat assistant"
+        >
+          <MessageSquare className="w-6 h-6" />
+          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[var(--accent)] rounded-full border-2 border-[var(--background)] animate-pulse" />
+        </motion.button>
+      )}
 
       {/* Chat Window Panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="absolute bottom-16 left-0 w-[340px] md:w-[360px] h-[480px] rounded-3xl glass-panel shadow-2xl border border-slate-200 dark:border-brand-green/10 flex flex-col overflow-hidden text-slate-800 dark:text-slate-200"
+            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 15, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="w-[90vw] sm:w-[380px] h-[520px] max-h-[85vh] rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="p-4 bg-slate-100/50 dark:bg-[#0c1224] border-b border-slate-200 dark:border-brand-green/10 flex items-center justify-between">
+            <div className="p-3.5 bg-[var(--surface-elevated)] border-b border-[var(--card-border)] flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-brand-green/10 border border-brand-green flex items-center justify-center text-brand-green animate-pulse">
-                  <Sparkles className="w-4.5 h-4.5" />
+                <div className="w-8 h-8 rounded-lg bg-[var(--secondary-accent)]/15 text-[var(--secondary-accent)] flex items-center justify-center">
+                  <Bot className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-black tracking-wide">SolutionzAI</h3>
-                  <span className="text-[9px] text-brand-green font-semibold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-green inline-block animate-ping" />
-                    Agent Active
-                  </span>
+                  <h3 className="text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
+                    SolutionzAI Assistant
+                    <Sparkles className="w-3 h-3 text-[var(--accent)]" />
+                  </h3>
+                  <p className="text-[10px] text-[var(--accent)] font-semibold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+                    Online &bull; Instant Answers
+                  </p>
                 </div>
               </div>
+
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-950 border border-slate-300 dark:border-slate-850 hover:text-rose-500 transition-colors flex items-center justify-center cursor-none"
+                className="w-7 h-7 rounded-md border border-[var(--card-border)] bg-[var(--surface)] hover:bg-[var(--surface-muted)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Close chat window"
               >
-                <X className="w-4.5 h-4.5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Chat Body messages */}
-            <div
-              ref={scrollRef}
-              className="flex-1 p-4 overflow-y-auto flex flex-col gap-3 scrollbar-none"
-            >
-              {messages.map((msg) => (
+            {/* Messages Feed */}
+            <div ref={scrollRef} className="flex-1 p-4 overflow-y-auto flex flex-col gap-3 text-xs bg-[var(--background)]">
+              {messages.map((m) => (
                 <div
-                  key={msg.id}
-                  className={`flex flex-col max-w-[80%] ${
-                    msg.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
+                  key={m.id}
+                  className={`flex gap-2 max-w-[85%] ${
+                    m.sender === "user" ? "ml-auto flex-row-reverse" : "mr-auto"
                   }`}
                 >
                   <div
-                    className={`p-3 rounded-2xl text-xs leading-relaxed ${
-                      msg.sender === "user"
-                        ? "bg-gradient-to-r from-brand-green to-brand-blue text-white rounded-tr-none"
-                        : "bg-slate-200 dark:bg-slate-900 border border-slate-300/30 dark:border-slate-850 rounded-tl-none"
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5 ${
+                      m.sender === "user"
+                        ? "bg-[var(--secondary-accent)] text-white"
+                        : "bg-[var(--surface-muted)] text-[var(--accent)]"
                     }`}
                   >
-                    {msg.text}
+                    {m.sender === "user" ? <User className="w-3 h-3" /> : <Bot className="w-3.5 h-3.5" />}
                   </div>
-                  <span className="text-[8px] text-slate-500 mt-1 px-1">
-                    {msg.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                  </span>
+
+                  <div className="flex flex-col">
+                    <div
+                      className={`p-2.5 rounded-xl leading-relaxed text-xs ${
+                        m.sender === "user"
+                          ? "bg-[var(--secondary-accent)] text-white rounded-tr-none"
+                          : "bg-[var(--surface)] text-[var(--text-primary)] border border-[var(--card-border)] rounded-tl-none shadow-xs"
+                      }`}
+                    >
+                      {m.text}
+                    </div>
+                    <span className={`text-[9px] text-[var(--text-muted)] mt-1 px-1 ${m.sender === "user" ? "text-right" : ""}`}>
+                      {m.time}
+                    </span>
+                  </div>
                 </div>
               ))}
 
-              {/* Typing simulation */}
               {isTyping && (
-                <div className="flex items-center gap-1.5 bg-slate-200 dark:bg-slate-900 border border-slate-300/30 dark:border-slate-850 p-3 rounded-2xl rounded-tl-none mr-auto max-w-[80%]">
-                  <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-1.5 h-1.5 bg-brand-green rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="flex items-center gap-1.5 text-[var(--text-muted)] p-2 text-xs">
+                  <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce" />
+                  <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <span className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full animate-bounce [animation-delay:0.4s]" />
+                  <span className="text-[10px] ml-1">SolutionzAI is typing...</span>
                 </div>
               )}
             </div>
 
-            {/* Quick replies suggestion chips */}
-            {messages.length === 1 && !isTyping && (
-              <div className="px-4 py-2 flex flex-wrap gap-1.5">
-                {quickReplies.map((reply) => (
-                  <button
-                    key={reply.text}
-                    onClick={() => handleSend(reply.text)}
-                    className="text-[10px] font-semibold py-1.5 px-3 rounded-full border border-brand-green/20 hover:border-brand-green bg-brand-green/5 text-slate-700 dark:text-brand-green transition-all hover:scale-103 cursor-none"
-                  >
-                    {reply.text}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Quick Suggested Replies */}
+            <div className="p-2 bg-[var(--surface)] border-t border-[var(--card-border)] flex items-center gap-1.5 overflow-x-auto">
+              {quickReplies.map((qr) => (
+                <button
+                  key={qr.text}
+                  type="button"
+                  onClick={() => handleSend(qr.text)}
+                  className="text-[10px] font-semibold py-1 px-2.5 rounded-full border border-[var(--card-border)] bg-[var(--surface-elevated)] hover:border-[var(--secondary-accent)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all whitespace-nowrap cursor-pointer"
+                >
+                  {qr.text}
+                </button>
+              ))}
+            </div>
 
             {/* Input Bar */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                handleSend(inputText);
+                handleSend();
               }}
-              className="p-3 bg-slate-100/50 dark:bg-[#0c1224] border-t border-slate-200 dark:border-brand-green/10 flex items-center gap-2"
+              className="p-3 bg-[var(--surface-elevated)] border-t border-[var(--card-border)] flex items-center gap-2"
             >
               <input
                 type="text"
-                placeholder="Type a message..."
+                placeholder="Ask about our AI & software services..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="flex-1 bg-slate-200 dark:bg-slate-950 border border-slate-350 dark:border-slate-850 px-3 py-2 text-xs rounded-xl focus:outline-none focus:border-brand-green text-slate-800 dark:text-slate-100 cursor-none"
+                className="flex-1 bg-[var(--surface)] border border-[var(--input-border)] px-3 py-2 text-xs rounded-lg text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
+                aria-label="Message to assistant"
               />
               <button
                 type="submit"
-                className="w-8 h-8 rounded-xl bg-brand-green hover:bg-brand-green/90 text-slate-900 flex items-center justify-center transition-all cursor-none"
-                aria-label="Send"
+                className="w-8 h-8 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-[var(--accent-foreground)] flex items-center justify-center transition-all cursor-pointer shadow-xs disabled:opacity-40"
+                disabled={!inputText.trim()}
+                aria-label="Send message"
               >
                 <Send className="w-3.5 h-3.5" />
               </button>

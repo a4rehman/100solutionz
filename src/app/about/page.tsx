@@ -1,55 +1,54 @@
 "use client";
 
 import React from "react";
-import { motion as m } from "framer-motion";
-import { Sparkles, Target, Compass, Award, Shield, Users, GitBranch, Globe } from "lucide-react";
+import { Target, Compass, Award, Shield, Users, GitBranch, Globe, Calendar, ArrowRight } from "lucide-react";
 
 const values = [
-  { icon: Target, title: "Innovation First", desc: "We continually test new frontiers in Agentic AI and edge computing to ensure client codebases remain competitive." },
-  { icon: Shield, title: "Uncompromising Integrity", desc: "No cut corners. We sign strict NDAs, use secure infrastructure configurations, and deliver on our promises." },
-  { icon: Compass, title: "User-Centric Design", desc: "We believe that software should be intuitive. Every pixel is placed to optimize client retention and satisfaction." },
-  { icon: Award, title: "Commitment to Excellence", desc: "We review, refactor, and audit every line of code to maintain premium, maintenance-free, production-grade products." },
+  { icon: Target, title: "Innovation First", desc: "We continually test new frontiers in Agentic AI and edge computing to ensure client codebases remain competitive and modern." },
+  { icon: Shield, title: "Uncompromising Integrity", desc: "No cut corners. We sign strict bilateral NDAs, implement enterprise security configurations, and deliver on every commitment." },
+  { icon: Compass, title: "User-Centric Architecture", desc: "We believe software should be intuitive, fast, and reliable. Every flow is optimized for conversion, retention, and accessibility." },
+  { icon: Award, title: "Commitment to Excellence", desc: "We rigorously review, refactor, and type-check every line of code to maintain clean, production-grade products." },
 ];
 
 const team = [
   {
     name: "Rehman Siddiqui",
-    role: "Founder & CEO",
-    bio: "Ex-technical product manager with 10+ years shaping software initiatives for startups and mid-market enterprises.",
+    role: "Founder & Lead Architect",
+    bio: "Technical software leader with extensive experience architecting full-stack web platforms, distributed backends, and AI pipelines.",
     img: "RS",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://linkedin.com",
+    github: "https://github.com/a4rehman"
   },
   {
     name: "Dr. Aris Thorne",
     role: "Chief AI Scientist",
-    bio: "PhD in Machine Learning. Specialist in autonomous agent routing, fine-tuning LLMs, and semantic vector indexes.",
+    bio: "PhD in Machine Learning. Specialist in autonomous agent routing, fine-tuning LLMs, and enterprise semantic vector indexes.",
     img: "AT",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://linkedin.com",
+    github: "https://github.com"
   },
   {
     name: "Sarah Mitchell",
     role: "Lead Full-Stack Architect",
-    bio: "Former senior Next.js engineer at Vercel ecosystem partner. Expert in high-performance web applications and databases.",
+    bio: "Senior Next.js and React architect. Expert in high-throughput cloud dashboards, state architecture, and microfrontends.",
     img: "SM",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://linkedin.com",
+    github: "https://github.com"
   },
   {
     name: "Devrim Yusuf",
     role: "Head of Cloud & DevOps",
-    bio: "AWS Certified Solution Architect. Master of kubernetes orchestration, high-availability setups, and zero-downtime CI/CD.",
+    bio: "AWS Certified Solutions Architect. Master of Kubernetes orchestration, multi-cloud setups, and automated zero-downtime CI/CD.",
     img: "DY",
-    linkedin: "#",
-    github: "#"
+    linkedin: "https://linkedin.com",
+    github: "https://github.com"
   }
 ];
 
 const history = [
-  { year: "2021", title: "Company Founded", desc: "Launched 100Solutionz with a vision to automate complex web services." },
-  { year: "25-26", title: "Enterprise Dev Transition", desc: "Expanded services to include native iOS/Android engineering and enterprise clouds." },
-  { year: "2026", title: "AI Integration Core", desc: "Pivoted focus to custom agentic AI pipelines, vector DB search indices, and voice assistants." },
+  { year: "2021", title: "Studio Founded", desc: "Launched 100Solutionz with a clear vision to deliver clean, modern web engineering without bureaucratic agency overhead." },
+  { year: "2023", title: "Enterprise Cloud Expansion", desc: "Expanded core services to include native iOS/Android mobile engineering and multi-region AWS cloud deployments." },
+  { year: "2025-26", title: "Agentic AI Integration", desc: "Established dedicated AI division focusing on autonomous multi-agent pipelines, private RAG vector search, and voice intelligence." },
 ];
 
 export default function AboutPage() {
@@ -58,246 +57,204 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="flex flex-col w-full relative z-10">
+    <div className="flex flex-col w-full relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
       {/* 1. HERO HEADER */}
-      <section className="py-20 text-center px-4 max-w-4xl mx-auto">
-        <m.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full glass-panel border border-slate-350 dark:border-brand-green/20 text-xs text-brand-green font-bold mb-4"
-        >
-          Our Story <Sparkles className="w-3.5 h-3.5" />
-        </m.div>
-        
-        <m.h1
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight"
-        >
-          We Bridge Engineering and <span className="text-gradient">Artificial Intelligence</span>
-        </m.h1>
-        
-        <m.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-sm sm:text-base text-slate-500 dark:text-slate-400 mt-4 leading-relaxed max-w-2xl mx-auto font-medium"
-        >
-          At 100Solutionz, we believe that great ideas deserve world-class execution. We help startups design initial products and assist enterprises in scaling legacy software into modern, AI-augmented architectures.
-        </m.p>
+      <section className="text-center max-w-3xl mx-auto mb-16">
+        <span className="text-xs uppercase font-bold tracking-widest text-[var(--accent)]">
+          Company Overview
+        </span>
+        <h1 className="text-3xl sm:text-5xl font-black text-[var(--text-primary)] mt-2 tracking-tight">
+          Engineering the Future of <span className="text-gradient">Intelligent Software</span>
+        </h1>
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-3 leading-relaxed">
+          At 100Solutionz, we believe that complex ideas deserve clean, world-class execution. We partner with technology leaders and startups to architect scalable software products augmented with modern artificial intelligence.
+        </p>
       </section>
 
-      {/* 2. COMPANY STORY DETAILS */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 border-y border-slate-200/50 dark:border-slate-850/50 bg-slate-100/25 dark:bg-[#080d1a]/10">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          
-          <m.div
-            initial={{ opacity: 0, x: -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col gap-5 text-sm leading-relaxed text-slate-500 dark:text-slate-400"
-          >
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white">
-              Born from a Passion for Software Craftsmanship
+      {/* 2. STORY & PROMISE */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch mb-20">
+        <div className="rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-6 sm:p-8 shadow-xs flex flex-col justify-between">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mb-3">
+              Crafted by Builders, for Builders
             </h2>
-            <p>
-              100Solutionz was created out of a desire to build software without compromises. We saw too many companies struggle with slow agency turnarounds, bloated codebases, and outdated design methodologies.
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-3">
+              100Solutionz was created out of a desire to build software without compromises. We saw too many organizations struggle with bloated agencies, junior developer hand-offs, and delayed timelines.
             </p>
-            <p>
-              By combining a senior-only technical team with strict sprint delivery schedules, we created an environment where complex integrations (like vector sync engines, real-time streaming, and cross-platform apps) are completed on-time and within budget.
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+              By maintaining a senior-focused engineering team, we ensure that every system — from complex RAG data pipelines to high-traffic web applications — is delivered strictly on schedule, fully type-safe, and ready for production.
             </p>
-          </m.div>
+          </div>
+          <div className="mt-6 pt-4 border-t border-[var(--card-border)] flex items-center justify-between text-xs text-[var(--text-muted)]">
+            <span className="font-semibold text-[var(--text-primary)]">Direct Developer Communication</span>
+            <span className="text-[var(--accent)] font-bold">&bull; Zero Bureaucracy</span>
+          </div>
+        </div>
 
-          <m.div
-            initial={{ opacity: 0, x: 25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="rounded-3xl glass-panel p-8 border border-slate-200/50 dark:border-brand-green/10 shadow-lg relative overflow-hidden bg-slate-100/50 dark:bg-[#0c1224]/30"
-          >
-            <div className="absolute top-0 right-0 w-36 h-36 bg-brand-green/10 rounded-full blur-2xl pointer-events-none" />
-            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
-              <Users className="w-5 h-5 text-brand-green" /> Our Core Promise
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 leading-relaxed font-medium">
-              We promise zero layers of management bureaucracy. You work directly with lead engineers. Every feature is thoroughly code-reviewed, fully type-safe, responsive, and ready for deployment.
-            </p>
-            
-            <div className="mt-8">
-              <button
-                onClick={openCalendly}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-green to-brand-blue text-white text-xs font-bold shadow-md hover:scale-102 transition-transform cursor-none"
-              >
-                Meet the Architects
-              </button>
+        <div className="rounded-2xl bg-[var(--surface-elevated)] border border-[var(--card-border)] p-6 sm:p-8 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface)] border border-[var(--card-border)] text-[var(--accent)] flex items-center justify-center mb-4">
+              <Users className="w-5 h-5" />
             </div>
-          </m.div>
-
+            <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">
+              Our Core Engineering Promise
+            </h3>
+            <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+              You collaborate directly with senior technical architects. We provide weekly sprint demos, full Git repository transparency, 100% intellectual property ownership, and direct communication channels.
+            </p>
+          </div>
+          <div className="mt-6">
+            <button
+              type="button"
+              onClick={openCalendly}
+              className="px-5 py-2.5 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-xs inline-flex items-center gap-2"
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              Schedule Introductory Call
+            </button>
+          </div>
         </div>
       </section>
 
-      {/* 3. CORE VALUES SECTION */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full">
-        <div className="text-center max-w-xl mx-auto mb-16">
-          <span className="text-xs uppercase font-black tracking-widest text-brand-blue">
-            Principles
+      {/* 3. CORE VALUES */}
+      <section className="mb-20">
+        <div className="text-center max-w-xl mx-auto mb-10">
+          <span className="text-xs uppercase font-bold tracking-widest text-[var(--secondary-accent)]">
+            Guiding Principles
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black mt-1 text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold mt-1 text-[var(--text-primary)]">
             The Values That Drive Us
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {values.map((v, idx) => (
-            <m.div
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {values.map((v) => (
+            <div
               key={v.title}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              className="p-6 rounded-2xl glass-panel border border-slate-200/50 dark:border-slate-850 hover:border-slate-350 dark:hover:border-slate-750 transition-all flex gap-4 bg-slate-100/5 dark:bg-[#0c1224]/10"
+              className="p-5 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-xs flex items-start gap-4"
             >
-              <div className="w-10 h-10 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300/30 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center flex-shrink-0 group-hover:text-brand-green">
-                <v.icon className="w-5 h-5 text-brand-green" />
+              <div className="w-10 h-10 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                <v.icon className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-black text-slate-900 dark:text-white">
+                <h4 className="text-sm font-bold text-[var(--text-primary)]">
                   {v.title}
                 </h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                <p className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">
                   {v.desc}
                 </p>
               </div>
-            </m.div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* 4. GROWTH HISTORY TIMELINE */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 border-y border-slate-200/50 dark:border-slate-850/50 bg-slate-100/25 dark:bg-[#080d1a]/15">
-        <div className="max-w-4xl mx-auto">
-          
-          <div className="text-center max-w-xl mx-auto mb-16">
-            <span className="text-xs uppercase font-black tracking-widest text-brand-green">
-              Chronology
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black mt-1 text-slate-900 dark:text-white">
-              Company Milestones
-            </h2>
-          </div>
+      {/* 4. GROWTH HISTORY */}
+      <section className="mb-20 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--card-border)] p-6 sm:p-10 shadow-xs">
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <span className="text-xs uppercase font-bold tracking-widest text-[var(--accent)]">
+            Evolution
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold mt-1 text-[var(--text-primary)]">
+            Key Company Milestones
+          </h2>
+        </div>
 
-          <div className="relative border-l border-slate-200 dark:border-slate-800 ml-4 md:ml-24 pl-8 md:pl-16 space-y-12">
-            {history.map((hist, idx) => (
-              <m.div
-                key={hist.year}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="relative"
-              >
-                {/* Year tag left spacer */}
-                <span className="absolute hidden md:inline-block -left-36 top-1 text-base font-black text-brand-green tracking-tight w-24 text-right">
-                  {hist.year}
-                </span>
-
-                {/* Node indicator */}
-                <span className="absolute -left-12.5 md:-left-20 top-1.5 w-5 h-5 rounded-full border border-slate-350 dark:border-slate-800 bg-slate-50 dark:bg-[#0B1020] flex items-center justify-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
-                </span>
-
-                {/* Year tag mobile spacer */}
-                <span className="inline-block md:hidden text-xs font-black text-brand-green tracking-tight mb-1">
-                  {hist.year}
-                </span>
-
-                <h3 className="text-sm font-black text-slate-900 dark:text-white">
-                  {hist.title}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-450 mt-1 leading-relaxed max-w-xl font-medium">
-                  {hist.desc}
-                </p>
-              </m.div>
-            ))}
-          </div>
-
+        <div className="max-w-2xl mx-auto space-y-8 pl-4 border-l-2 border-[var(--card-border)]">
+          {history.map((hist) => (
+            <div key={hist.year} className="relative pl-6">
+              <span className="absolute -left-[31px] top-1 w-3.5 h-3.5 rounded-full bg-[var(--surface)] border-2 border-[var(--accent)]" />
+              <span className="text-xs font-mono font-bold text-[var(--accent)] uppercase tracking-wider block">
+                {hist.year}
+              </span>
+              <h3 className="text-sm font-bold text-[var(--text-primary)] mt-0.5">
+                {hist.title}
+              </h3>
+              <p className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">
+                {hist.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* 5. TEAM SHOWCASE */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full">
-        
-        {/* Header */}
-        <div className="text-center max-w-xl mx-auto mb-16">
-          <span className="text-xs uppercase font-black tracking-widest text-brand-blue">
-            Technical Directors
+      <section className="mb-16">
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <span className="text-xs uppercase font-bold tracking-widest text-[var(--secondary-accent)]">
+            Engineering Leadership
           </span>
-          <h2 className="text-2xl sm:text-3xl font-black mt-1 text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold mt-1 text-[var(--text-primary)]">
             Meet the Core Team
           </h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
-            We are senior engineers, database architects, and AI scientists dedicated to building robust products.
+          <p className="text-xs text-[var(--text-secondary)] mt-2">
+            Senior software engineers, AI researchers, and DevOps architects dedicated to product reliability.
           </p>
         </div>
 
-        {/* Team Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {team.map((t, idx) => (
-            <m.div
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {team.map((t) => (
+            <div
               key={t.name}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              className="group relative rounded-2xl glass-panel p-5 border border-slate-200/50 dark:border-slate-850 hover:border-slate-450 dark:hover:border-slate-700 shadow-md flex flex-col justify-between hover:scale-[1.01] transition-all bg-slate-100/50 dark:bg-[#0c1224]/20"
+              className="rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-5 shadow-xs flex flex-col justify-between"
             >
               <div>
-                {/* Fake Avatar Initials placeholder with beautiful gradients */}
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-green/20 to-brand-blue/20 border border-brand-green/10 flex items-center justify-center font-black text-lg text-brand-green mb-5 group-hover:scale-105 transition-transform">
+                <div className="w-14 h-14 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] flex items-center justify-center font-black text-base text-[var(--accent)] mb-4">
                   {t.img}
                 </div>
 
-                <h3 className="text-sm font-black text-slate-900 dark:text-white">
+                <h3 className="text-sm font-bold text-[var(--text-primary)]">
                   {t.name}
                 </h3>
-                <p className="text-[10px] uppercase font-bold text-slate-400 mt-0.5">
+                <p className="text-[10px] uppercase font-bold text-[var(--secondary-accent)] mt-0.5">
                   {t.role}
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-3.5 leading-relaxed font-medium line-clamp-3">
+                <p className="text-xs text-[var(--text-secondary)] mt-2.5 leading-relaxed line-clamp-3">
                   {t.bio}
                 </p>
               </div>
 
-              {/* Social icons */}
-              <div className="flex items-center gap-2.5 mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-850/50 text-slate-500">
-                <a href={t.linkedin} className="hover:text-brand-green transition-colors cursor-none" aria-label="LinkedIn Profile">
+              <div className="flex items-center gap-2 mt-5 pt-3 border-t border-[var(--card-border)] text-[var(--text-muted)]">
+                <a
+                  href={t.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[var(--secondary-accent)] transition-colors p-1"
+                  aria-label={`${t.name} LinkedIn`}
+                >
                   <Globe className="w-4 h-4" />
                 </a>
-                <a href={t.github} className="hover:text-brand-blue transition-colors cursor-none" aria-label="GitHub Profile">
+                <a
+                  href={t.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[var(--text-primary)] transition-colors p-1"
+                  aria-label={`${t.name} GitHub`}
+                >
                   <GitBranch className="w-4 h-4" />
                 </a>
               </div>
-            </m.div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* 6. CONVERSION FOOTER BANNER */}
-      <section className="py-16 text-center max-w-4xl mx-auto px-4">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+      {/* 6. CONVERSION FOOTER */}
+      <section className="text-center max-w-2xl mx-auto rounded-2xl bg-[var(--surface-elevated)] border border-[var(--card-border)] p-8 shadow-xs">
+        <h2 className="text-xl sm:text-2xl font-black text-[var(--text-primary)]">
           Let&apos;s Build Something <span className="text-gradient">Outstanding</span> Together
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto leading-relaxed font-medium">
-          Have an idea or a specific set of enterprise guidelines? Talk directly to Rehman and our engineering leads to explore solutions.
+        <p className="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+          Have an upcoming product initiative or legacy migration? Speak directly with our technical leadership.
         </p>
-        <div className="mt-8">
+        <div className="mt-5">
           <button
+            type="button"
             onClick={openCalendly}
-            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-brand-green to-brand-blue text-white font-bold text-xs shadow-lg hover:scale-103 transition-transform cursor-none"
+            className="px-6 py-3 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-xs inline-flex items-center gap-1.5"
           >
-            Get Free Consultation Slot
+            Schedule Free Architecture Consultation <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </section>

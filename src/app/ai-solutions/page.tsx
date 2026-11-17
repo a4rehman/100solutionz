@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Brain, Cpu, MessageSquare, Mic, Database, ArrowRight, Play, RefreshCw, Terminal, Eye, Check } from "lucide-react";
+import { motion } from "framer-motion";
+import { Brain, Cpu, Mic, Database, Play, RefreshCw, Terminal, Eye, Calendar } from "lucide-react";
 
 interface ScenarioStep {
   type: "thought" | "action" | "observation" | "result";
@@ -66,7 +66,7 @@ const scenarios: Scenario[] = [
 
 export default function AISolutionsPage() {
   const [selectedScenario, setSelectedScenario] = useState<Scenario>(scenarios[0]);
-  const [activeStep, setActiveStep] = useState<number>(-1); // -1: Not started
+  const [activeStep, setActiveStep] = useState<number>(-1);
   const [isRunning, setIsRunning] = useState(false);
 
   const runSimulation = () => {
@@ -82,7 +82,7 @@ export default function AISolutionsPage() {
         clearInterval(interval);
         setIsRunning(false);
       }
-    }, 1800); // 1.8 seconds per step
+    }, 1500);
   };
 
   const handleScenarioChange = (scen: Scenario) => {
@@ -99,146 +99,159 @@ export default function AISolutionsPage() {
     <div className="flex flex-col w-full relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
       
       {/* 1. HEADER */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <span className="text-xs uppercase font-black tracking-widest text-brand-green">
-          Showcase
+      <div className="text-center max-w-3xl mx-auto mb-14">
+        <span className="text-xs uppercase font-bold tracking-widest text-[var(--accent)]">
+          Artificial Intelligence Engineering
         </span>
-        <h1 className="text-4xl font-black text-slate-900 dark:text-white mt-2 tracking-tight">
-          Next-Generation <span className="text-gradient">Agentic AI Solutions</span>
+        <h1 className="text-3xl sm:text-5xl font-black text-[var(--text-primary)] mt-2 tracking-tight">
+          Enterprise <span className="text-gradient">Agentic AI Architectures</span>
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed font-medium">
-          We build autonomous AI agents, fine-tuned model pipelines, RAG databases, and custom automation loops that act as scalable extensions of your workforce.
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-3 leading-relaxed">
+          We architect autonomous AI agents, fine-tuned model pipelines, RAG databases, and custom automation loops that execute real workflows without continuous human prompting.
         </p>
       </div>
 
       {/* 2. CORE SOLUTIONS CATALOG */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
         
-        <div className="p-6 rounded-3xl glass-panel border border-slate-200/50 dark:border-slate-850 hover:border-brand-green/30 bg-slate-100/30 dark:bg-[#0c1224]/30 shadow-md">
-          <div className="w-10 h-10 rounded-xl bg-brand-green/10 text-brand-green flex items-center justify-center mb-6">
-            <Brain className="w-5 h-5" />
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] text-[var(--accent)] flex items-center justify-center mb-4">
+              <Brain className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-[var(--text-primary)]">Autonomous AI Agents</h3>
+            <p className="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+              AI software agents that interpret multi-step natural goals, call external APIs, query relational databases, handle schema validations, and report verified outcomes.
+            </p>
           </div>
-          <h3 className="text-base font-black text-slate-900 dark:text-white">Autonomous AI Agents</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed font-medium">
-            AI software workers that process multi-step instructions, use custom API tools, handle database reads, check for anomalies, and report outcomes.
-          </p>
+          <div className="mt-4 pt-3 border-t border-[var(--card-border)] text-[10px] font-mono text-[var(--accent)] font-semibold">
+            &bull; Multi-Turn Agent Loops
+          </div>
         </div>
 
-        <div className="p-6 rounded-3xl glass-panel border border-slate-200/50 dark:border-slate-850 hover:border-brand-green/30 bg-slate-100/30 dark:bg-[#0c1224]/30 shadow-md">
-          <div className="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center mb-6">
-            <Database className="w-5 h-5" />
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] text-[var(--secondary-accent)] flex items-center justify-center mb-4">
+              <Database className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-[var(--text-primary)]">Semantic RAG Knowledge Bases</h3>
+            <p className="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+              Index thousands of contracts, spreadsheets, internal documentation, and slides into isolated vector databases (Qdrant, Pinecone) with RBAC permissions.
+            </p>
           </div>
-          <h3 className="text-base font-black text-slate-900 dark:text-white">Semantic RAG Systems</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed font-medium">
-            Ingest thousands of spreadsheets, legal documents, and text files into scalable vector indexes (Pinecone, Qdrant) with metadata segregation.
-          </p>
+          <div className="mt-4 pt-3 border-t border-[var(--card-border)] text-[10px] font-mono text-[var(--secondary-accent)] font-semibold">
+            &bull; Zero Training Data Leakage
+          </div>
         </div>
 
-        <div className="p-6 rounded-3xl glass-panel border border-slate-200/50 dark:border-slate-850 hover:border-brand-green/30 bg-slate-100/30 dark:bg-[#0c1224]/30 shadow-md">
-          <div className="w-10 h-10 rounded-xl bg-cyan-400/10 text-cyan-400 flex items-center justify-center mb-6">
-            <Mic className="w-5 h-5" />
+        <div className="p-6 rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="w-10 h-10 rounded-xl bg-[var(--surface-elevated)] border border-[var(--card-border)] text-emerald-500 flex items-center justify-center mb-4">
+              <Mic className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-[var(--text-primary)]">Real-Time Voice &amp; Speech AI</h3>
+            <p className="text-xs text-[var(--text-secondary)] mt-2 leading-relaxed">
+              Streaming audio transcription, ultra-low latency voice agents, and telephone pipeline automations utilizing WebSockets and Twilio integrations.
+            </p>
           </div>
-          <h3 className="text-base font-black text-slate-900 dark:text-white">Voice & Transcription AI</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed font-medium">
-            Integrate real-time streaming audio transcription, dynamic TTS synthesizers, and call automation pipelines using Twilio/Vapi integrations.
-          </p>
+          <div className="mt-4 pt-3 border-t border-[var(--card-border)] text-[10px] font-mono text-emerald-500 font-semibold">
+            &bull; &lt; 400ms Audio Latency
+          </div>
         </div>
 
       </div>
 
       {/* 3. INTERACTIVE AI PLAYGROUND SANDBOX */}
-      <div className="border border-slate-200 dark:border-slate-850 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden bg-slate-100/40 dark:bg-[#080d1a]/20">
+      <div className="rounded-2xl bg-[var(--surface)] border border-[var(--card-border)] p-6 sm:p-8 shadow-lg">
         
-        {/* Decorative core */}
-        <div className="absolute -top-24 -left-24 w-64 h-64 bg-brand-green/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Controls Column */}
-          <div className="lg:col-span-4 flex flex-col justify-between gap-6">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-5">
             <div>
-              <span className="text-[10px] font-black text-brand-green uppercase tracking-widest flex items-center gap-1.5">
-                <Terminal className="w-4 h-4" /> Live Interactive Sandbox
+              <span className="text-[10px] font-mono font-bold text-[var(--accent)] uppercase tracking-wider flex items-center gap-1.5">
+                <Terminal className="w-3.5 h-3.5" /> Interactive Agent Sandbox
               </span>
-              <h2 className="text-xl sm:text-2xl font-black mt-2 leading-tight">
-                AI Agent Console
+              <h2 className="text-xl sm:text-2xl font-black text-[var(--text-primary)] mt-1.5">
+                Multi-Agent Execution Console
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
-                Choose a business scenario on the right, click Run Simulation, and monitor how the Agent executes reasoning steps in real-time.
+              <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
+                Select a business scenario below, click Run Simulation, and observe how the agent plans, calls tools, and arrives at validated answers in real-time.
               </p>
             </div>
 
             {/* Scenario buttons */}
-            <div className="grid gap-2">
+            <div className="space-y-2">
               {scenarios.map((scen) => {
                 const isSelected = selectedScenario.id === scen.id;
                 return (
                   <button
                     key={scen.id}
+                    type="button"
                     disabled={isRunning}
                     onClick={() => handleScenarioChange(scen)}
-                    className={`p-3 rounded-2xl text-left border cursor-none transition-all flex flex-col gap-1.5 ${
+                    className={`w-full p-3 rounded-xl text-left border transition-all cursor-pointer flex flex-col gap-1 ${
                       isSelected
-                        ? "bg-slate-200/50 dark:bg-slate-900 border-brand-green shadow-lg"
-                        : "bg-transparent border-slate-300/35 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-900/50 disabled:opacity-40"
+                        ? "bg-[var(--surface-elevated)] border-[var(--accent)] shadow-xs"
+                        : "bg-[var(--surface)] border-[var(--card-border)] hover:bg-[var(--surface-elevated)] disabled:opacity-40"
                     }`}
                   >
-                    <span className="text-xs font-bold">{scen.name}</span>
-                    <span className="text-[10px] text-slate-450 dark:text-slate-400 leading-snug line-clamp-1">{scen.desc}</span>
+                    <span className="text-xs font-bold text-[var(--text-primary)]">{scen.name}</span>
+                    <span className="text-[10px] text-[var(--text-secondary)] leading-snug line-clamp-1">{scen.desc}</span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Action button */}
+            {/* Simulation Trigger */}
             <button
+              type="button"
               onClick={runSimulation}
               disabled={isRunning}
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-green to-brand-blue text-white font-bold text-xs shadow-md hover:scale-[1.01] transition-transform flex items-center justify-center gap-2 disabled:opacity-50 cursor-none"
+              className="w-full py-3 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-xs flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isRunning ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin" />
-                  Agent Thinking...
+                  <span>Agent Executing Pipeline...</span>
                 </>
               ) : (
                 <>
                   <Play className="w-4 h-4" />
-                  Run Scenario Simulation
+                  <span>Run Scenario Simulation</span>
                 </>
               )}
             </button>
           </div>
 
-          {/* Interactive Logs Display Column */}
-          <div className="lg:col-span-8 rounded-2xl border border-slate-300/70 dark:border-slate-850 p-5 bg-slate-200/80 dark:bg-[#070b16] font-mono text-[11px] leading-relaxed shadow-inner flex flex-col min-h-[380px] justify-between">
+          {/* Console Terminal Column */}
+          <div className="lg:col-span-7 rounded-xl border border-[var(--card-border)] bg-[var(--surface-elevated)] p-4 font-mono text-[11px] leading-relaxed flex flex-col justify-between min-h-[380px]">
             
-            {/* Console Terminal Header */}
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-300 dark:border-slate-800 text-[10px] text-slate-450 dark:text-slate-500 font-bold uppercase tracking-wider">
-              <span>Solutionz-Agent-v1.4.3</span>
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-[var(--card-border)] text-[10px] text-[var(--text-muted)] font-bold">
+              <span>Solutionz-Agent-Runtime-v2.0</span>
               <span className="flex items-center gap-1.5">
-                <span className={`w-2 h-2 rounded-full ${isRunning ? "bg-amber-400 animate-ping" : "bg-brand-green"}`} />
-                {isRunning ? "Running" : "Idle"}
+                <span className={`w-2 h-2 rounded-full ${isRunning ? "bg-amber-400 animate-ping" : "bg-[var(--accent)]"}`} />
+                <span className={isRunning ? "text-amber-500" : "text-[var(--accent)]"}>{isRunning ? "Processing" : "Idle"}</span>
               </span>
             </div>
 
-            {/* Console output display */}
-            <div className="flex-1 py-4 flex flex-col gap-4.5 overflow-y-auto max-h-[320px] scrollbar-none">
+            {/* Console Output */}
+            <div className="flex-1 py-3.5 space-y-3.5 overflow-y-auto max-h-[300px]">
               
               {/* Trigger Input Prompt */}
-              <div>
-                <span className="text-slate-450 dark:text-slate-500 block font-black uppercase text-[9px] tracking-wide">
-                  [1] INPUT TRIGGER:
+              <div className="p-2.5 rounded-lg bg-[var(--surface)] border border-[var(--card-border)]">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[var(--text-muted)] block mb-1">
+                  [1] Task Goal Prompt:
                 </span>
-                <span className="text-slate-900 dark:text-slate-200 font-bold">
+                <span className="text-[var(--text-primary)] font-bold">
                   &gt; {selectedScenario.triggerPrompt}
                 </span>
               </div>
 
               {/* Dynamic steps loop display */}
               {activeStep >= 0 && (
-                <div className="flex flex-col gap-4">
+                <div className="space-y-3">
                   {selectedScenario.steps.slice(0, activeStep + 1).map((step, idx) => {
                     const isThought = step.type === "thought";
                     const isAction = step.type === "action";
@@ -247,53 +260,49 @@ export default function AISolutionsPage() {
 
                     return (
                       <motion.div
-                        initial={{ opacity: 0, x: -5 }}
+                        initial={{ opacity: 0, x: -4 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.2 }}
                         key={idx}
-                        className="pl-3.5 border-l-2 border-slate-300 dark:border-slate-800"
+                        className="pl-3 border-l-2 border-[var(--card-border)]"
                       >
                         {isThought && (
                           <div>
-                            <span className="text-emerald-500 dark:text-brand-green font-black uppercase text-[9px] tracking-wide flex items-center gap-1">
-                              <Brain className="w-3.5 h-3.5" /> THOUGHT PROCESS:
+                            <span className="text-[var(--accent)] font-bold uppercase text-[9px] flex items-center gap-1">
+                              <Brain className="w-3 h-3" /> Thought Process:
                             </span>
-                            <span className="text-slate-800 dark:text-slate-300 font-medium">
+                            <span className="text-[var(--text-secondary)] font-medium">
                               {step.text}
                             </span>
                           </div>
                         )}
                         {isAction && (
                           <div>
-                            <span className="text-blue-500 dark:text-brand-blue font-black uppercase text-[9px] tracking-wide flex items-center gap-1">
-                              <Cpu className="w-3.5 h-3.5" /> AGENT ACTION:
+                            <span className="text-[var(--secondary-accent)] font-bold uppercase text-[9px] flex items-center gap-1">
+                              <Cpu className="w-3 h-3" /> Agent Action Call:
                             </span>
-                            <span className="text-slate-900 dark:text-slate-250 font-bold">
+                            <span className="text-[var(--text-primary)] font-bold">
                               {step.text}
                             </span>
                           </div>
                         )}
                         {isObs && (
                           <div>
-                            <span className="text-cyan-500 dark:text-cyan-400 font-black uppercase text-[9px] tracking-wide flex items-center gap-1">
-                              <Eye className="w-3.5 h-3.5" /> TOOL OBSERVATION:
+                            <span className="text-amber-500 font-bold uppercase text-[9px] flex items-center gap-1">
+                              <Eye className="w-3 h-3" /> Tool Observation:
                             </span>
-                            <span className="text-slate-500 dark:text-slate-400 font-medium">
+                            <span className="text-[var(--text-secondary)]">
                               {step.text}
                             </span>
                           </div>
                         )}
                         {isRes && (
-                          <motion.div
-                            initial={{ scale: 0.98, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="p-3.5 rounded-xl border border-brand-green/20 bg-brand-green/5 text-brand-green leading-relaxed mt-2"
-                          >
-                            <span className="font-black block uppercase text-[9px] tracking-wide mb-1">
-                              [✓] FINAL EXECUTION LOG:
+                          <div className="p-2.5 rounded-lg bg-[var(--selection-bg)] border border-[var(--accent)]/30 text-[var(--text-primary)] mt-1.5">
+                            <span className="font-bold block uppercase text-[9px] text-[var(--accent)] mb-0.5">
+                              [✓] Final Verified Result:
                             </span>
                             {step.text}
-                          </motion.div>
+                          </div>
                         )}
                       </motion.div>
                     );
@@ -303,10 +312,10 @@ export default function AISolutionsPage() {
 
             </div>
 
-            {/* Terminal Instructions Footer */}
-            <div className="text-[10px] text-slate-450 dark:text-slate-500 border-t border-slate-300 dark:border-slate-800 pt-3 flex items-center justify-between">
-              <span>Press simulator trigger to run diagnostic cycles</span>
-              <span>Node: AWS US-East-1</span>
+            {/* Terminal Footer */}
+            <div className="text-[10px] text-[var(--text-muted)] border-t border-[var(--card-border)] pt-2.5 flex items-center justify-between">
+              <span>Sandbox: Python 3.12 / FastAPI</span>
+              <span>Encrypted Memory Context</span>
             </div>
 
           </div>
@@ -316,19 +325,21 @@ export default function AISolutionsPage() {
       </div>
 
       {/* 4. CALL TO ACTION DETAILS */}
-      <section className="py-16 text-center max-w-4xl mx-auto px-4 mt-12">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-          Ready to Automate Your Business Operations?
+      <section className="py-14 text-center max-w-3xl mx-auto px-4 mt-8">
+        <h2 className="text-xl sm:text-3xl font-black text-[var(--text-primary)]">
+          Ready to Automate Complex Workflows?
         </h2>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto leading-relaxed font-medium">
-          Let Rehman and our team of AI scientists draft a blueprint outlining vector store selections, fine-tuning scripts, and secure pipeline connections.
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-2.5 leading-relaxed">
+          Schedule a technical session with our AI engineering team. We&apos;ll evaluate vector indexing requirements, model fine-tuning feasibility, and system latency goals.
         </p>
-        <div className="mt-8">
+        <div className="mt-6">
           <button
+            type="button"
             onClick={openCalendly}
-            className="px-8 py-3.5 rounded-full bg-gradient-to-r from-brand-green to-brand-blue text-white font-bold text-xs shadow-lg hover:scale-103 transition-transform cursor-none"
+            className="px-6 py-3 rounded-xl bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-md inline-flex items-center gap-2"
           >
-            Schedule AI Architecture Meeting
+            <Calendar className="w-4 h-4" />
+            Schedule AI Architecture Consultation
           </button>
         </div>
       </section>
