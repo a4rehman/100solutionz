@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   description: "Shape your ideas with 100Solutionz. We deliver world-class AI agents, RAG systems, premium web products, custom mobile apps, and scalable cloud architectures.",
   keywords: "Artificial Intelligence, Web Development, Mobile Apps, Data Science, Digital Transformation, Agentic AI, RAG Systems, 100Solutionz",
   authors: [{ name: "100Solutionz Technical Team" }],
+  icons: {
+    icon: "/icon.svg",
+  },
   openGraph: {
     title: "100Solutionz | AI & Software Development Company",
     description: "Let's Shape Your Idea. We build futuristic enterprise-grade AI products, web platforms, and mobile apps.",
