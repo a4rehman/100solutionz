@@ -1,6 +1,7 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Code, Smartphone, BarChart3, Cloud, Check, ArrowRight, Calendar } from "lucide-react";
@@ -192,6 +193,32 @@ function ServicesPageContent() {
                 </div>
               ))}
             </div>
+
+            {/* AI Solutions Callout Banner */}
+            {activeSrv.id === "ai" && (
+              <div className="mt-6 p-4 rounded-xl bg-[var(--selection-bg)] border border-[var(--accent)]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[var(--surface-elevated)] border border-[var(--accent)]/50 text-[var(--accent)] flex items-center justify-center shrink-0">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-[var(--text-primary)] block">
+                      Looking for Productized AI Automation Services?
+                    </span>
+                    <span className="text-[11px] text-[var(--text-secondary)]">
+                      Explore our 6 turn-key implementations: RAG Assistants, AI Support, Document Intelligence &amp; more.
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/ai-solutions"
+                  className="px-4 py-2 rounded-lg bg-[var(--accent)] text-[var(--accent-foreground)] font-bold text-xs hover:bg-[var(--accent-hover)] transition-all cursor-pointer shadow-xs inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+                >
+                  <span>View 6 AI Solutions</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Technology Badges */}

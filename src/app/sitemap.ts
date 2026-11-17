@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
+import { getAllAISolutionSlugs } from "@/data/aiSolutions";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://100solutionz.com";
-  const routes = [
+  const coreRoutes = [
     "",
     "/about",
     "/services",
@@ -13,10 +14,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
   ];
 
-  return routes.map((route) => ({
+  const aiSolutionRoutes = getAllAISolutionSlugs().map(
+    (slug) => `/ai-solutions/${slug}`
+  );
+
+  const allRoutes = [...coreRoutes, ...aiSolutionRoutes];
+
+  return allRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly" as const,
-    priority: route === "" ? 1.0 : 0.8,
+    priority: route === "" ? 1.0 : route.startsWith("/ai-solutions") ? 0.9 : 0.8,
   }));
 }
