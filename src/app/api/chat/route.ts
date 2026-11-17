@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateChatInput, sanitizeMessage } from "@/lib/chatbot/validation";
-import { searchWebsiteKnowledge, getSources } from "@/lib/chatbot/retrieval";
+import { searchWebsiteKnowledgeScored, getSources } from "@/lib/chatbot/retrieval";
+import type { KnowledgeChunk } from "@/lib/chatbot/knowledge-index";
 import { generateAIResponse, isAIConfigured } from "@/lib/chatbot/ai-provider";
 import { getConversation, appendConversation } from "@/lib/chatbot/conversation";
 import { SYSTEM_PROMPT } from "@/lib/chatbot/system-prompt";
@@ -26,9 +27,17 @@ function isRateLimited(ip: string): boolean {
   return recent.length > MAX_REQUESTS_PER_WINDOW;
 }
 
+function offTopicResponse(): { answer: string; suggestions: string[] } {
+  return {
+    answer:
+      "I'm here to help with questions about 100Solutionz - our services, AI solutions, projects, or how to work with us. Could you ask something related to our website?",
+    suggestions: ["Explore Our Services", "Show Our Portfolio", "Book a Consultation"],
+  };
+}
+
 function buildFallbackAnswer(
   message: string,
-  chunks: ReturnType<typeof searchWebsiteKnowledge>
+  chunks: KnowledgeChunk[]
 ): { answer: string; suggestions: string[] } {
   if (chunks.length === 0) {
     return {
@@ -41,19 +50,15 @@ function buildFallbackAnswer(
   const rest = chunks.slice(1);
 
   const lines: string[] = [];
-  lines.push("Here's what I found on the 100Solutionz website:");
+  lines.push("Based on the 100Solutionz website:");
   lines.push("");
-  lines.push("**" + top.title + "**");
-  lines.push(top.content.length > 420 ? top.content.slice(0, 420) + "..." : top.content);
+  lines.push("**" + top.title + "** - " + (top.content.length > 160 ? top.content.slice(0, 160) + "..." : top.content));
   if (rest.length > 0) {
     lines.push("");
-    lines.push("You might also find these helpful:");
-    for (const c of rest) {
-      lines.push("- " + c.title + " - " + (c.content.length > 140 ? c.content.slice(0, 140) + "..." : c.content));
-    }
+    lines.push("Also relevant: " + rest.map((c) => c.title).join(", ") + ".");
   }
   lines.push("");
-  lines.push("Would you like more detail on any of these, or help choosing the right service for your project?");
+  lines.push("Want more detail, or help choosing the right service?");
 
   const suggestions: string[] = [];
   const cats = new Set(chunks.map((c) => c.category));
@@ -104,7 +109,9 @@ export async function POST(req: NextRequest) {
     const serverHistory = getConversation(conversationId);
     const combinedHistory = serverHistory.length > 0 ? serverHistory : history;
 
-    const chunks = searchWebsiteKnowledge(message, 4);
+    const scoredChunks = searchWebsiteKnowledgeScored(message, 4);
+    const chunks = scoredChunks.map((s) => s.chunk);
+    const topScore = scoredChunks[0]?.score || 0;
     const sources = getSources(chunks);
     const contextText = chunks.map((c) => `[${c.title}] (${c.url})\n${c.content}`).join("\n\n");
 
@@ -126,13 +133,13 @@ export async function POST(req: NextRequest) {
           aiDisabledUntil = Date.now() + 10 * 60 * 1000;
         }
         console.warn("AI provider failed, falling back to knowledge search:", err);
-        const fb = buildFallbackAnswer(message, chunks);
+        const fb = topScore < 4 ? offTopicResponse() : buildFallbackAnswer(message, chunks);
         answer = fb.answer;
         suggestions = fb.suggestions;
         mode = "knowledge-search";
       }
     } else {
-      const fb = buildFallbackAnswer(message, chunks);
+      const fb = topScore < 4 ? offTopicResponse() : buildFallbackAnswer(message, chunks);
       answer = fb.answer;
       suggestions = fb.suggestions;
       mode = "knowledge-search";

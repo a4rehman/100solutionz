@@ -18,7 +18,7 @@ function tokenize(text: string): string[] {
     .filter((t) => t.length > 1 && !STOP_WORDS.has(t));
 }
 
-export function searchWebsiteKnowledge(query: string, limit = 6): KnowledgeChunk[] {
+export function searchWebsiteKnowledgeScored(query: string, limit = 6): { chunk: KnowledgeChunk; score: number }[] {
   const tokens = tokenize(query);
   if (tokens.length === 0) return [];
 
@@ -80,8 +80,11 @@ export function searchWebsiteKnowledge(query: string, limit = 6): KnowledgeChunk
   return scored
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map((s) => s.chunk);
+    .slice(0, limit);
+}
+
+export function searchWebsiteKnowledge(query: string, limit = 6): KnowledgeChunk[] {
+  return searchWebsiteKnowledgeScored(query, limit).map((s) => s.chunk);
 }
 
 export function getSources(chunks: KnowledgeChunk[]): { title: string; url: string }[] {
