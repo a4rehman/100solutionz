@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Calendar, Clock, ArrowRight, X, Sparkles, BookOpen } from "lucide-react";
 
@@ -145,6 +145,18 @@ export default function BlogPage() {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [readingPost, setReadingPost] = useState<Post | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setReadingPost(null);
+      }
+    };
+    if (readingPost) {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [readingPost]);
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesFilter = activeFilter === "all" || post.category === activeFilter;
@@ -305,6 +317,9 @@ export default function BlogPage() {
             />
 
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Article Details"
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 15 }}

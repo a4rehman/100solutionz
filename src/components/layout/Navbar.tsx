@@ -43,13 +43,26 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menus on route navigation
+  // Close menus on route navigation or Escape key
   useEffect(() => {
     startTransition(() => {
       setMobileMenuOpen(false);
       setDropdownOpen(false);
     });
   }, [pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+        setDropdownOpen(false);
+      }
+    };
+    if (mobileMenuOpen || dropdownOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [mobileMenuOpen, dropdownOpen]);
 
   const openCalendly = () => {
     window.dispatchEvent(new CustomEvent("open-calendly"));

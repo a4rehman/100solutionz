@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, MapPin, Clock, DollarSign, Heart, Monitor, BookOpen, X, Check, ArrowRight } from "lucide-react";
 
@@ -67,6 +67,18 @@ export default function CareersPage() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [formStep, setFormStep] = useState(1);
   const [formData, setFormData] = useState({ name: "", email: "", links: "", cover: "" });
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedJob(null);
+      }
+    };
+    if (selectedJob) {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [selectedJob]);
 
   const handleApply = (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,6 +190,9 @@ export default function CareersPage() {
             />
 
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Job Application Form"
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 15 }}

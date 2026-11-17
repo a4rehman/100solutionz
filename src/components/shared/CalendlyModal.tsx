@@ -36,8 +36,18 @@ export default function CalendlyModal() {
       setFormData({ name: "", email: "", notes: "" });
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
     window.addEventListener("open-calendly", handleOpen);
-    return () => window.removeEventListener("open-calendly", handleOpen);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("open-calendly", handleOpen);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const handleNextStep = () => {
@@ -100,6 +110,9 @@ export default function CalendlyModal() {
 
         {/* Modal Window */}
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Book Technical Consultation"
           initial={{ scale: 0.95, opacity: 0, y: 10 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.95, opacity: 0, y: 10 }}

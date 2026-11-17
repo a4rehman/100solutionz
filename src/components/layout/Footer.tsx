@@ -122,13 +122,22 @@ export default function Footer() {
                 <Link href="/about" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">About Us</Link>
               </li>
               <li>
+                <Link href="/ai-solutions" className="text-[var(--accent)] font-semibold hover:underline transition-colors">AI Solutions</Link>
+              </li>
+              <li>
                 <Link href="/services" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Services</Link>
               </li>
               <li>
                 <Link href="/portfolio" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Portfolio</Link>
               </li>
               <li>
+                <Link href="/blog" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Blog</Link>
+              </li>
+              <li>
                 <Link href="/careers" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Careers</Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
