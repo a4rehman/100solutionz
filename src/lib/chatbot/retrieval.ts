@@ -39,6 +39,41 @@ export function searchWebsiteKnowledge(query: string, limit = 6): KnowledgeChunk
     if (chunk.id.endsWith("overview") && tokens.length <= 4) score += 3;
     // Penalize blog chunks unless blog explicitly asked
     if (chunk.category === "blog" && !q.includes("blog") && !q.includes("article")) score -= 4;
+    if (chunk.category === "faq" && !q.includes("faq") && !q.includes("how") && !q.includes("what")) score -= 3;
+
+    // Intent boosts for better relevance
+    const ql = q;
+    if (/(website|web|site|saas|platform|ecommerce|e-commerce|shop|store|clothing|retail)/.test(ql)) {
+      if (chunk.id === "service-web") score += 8;
+      if (chunk.id === "services-overview") score += 2;
+      if (chunk.id === "portfolio-ecom-platform") score += 6;
+    }
+    if (/(mobile|app|ios|android|react native|flutter)/.test(ql)) {
+      if (chunk.id === "service-mobile") score += 8;
+      if (chunk.id === "services-overview") score += 2;
+      if (chunk.id === "portfolio-mobile-app") score += 6;
+    }
+    if (/(ai|chatbot|agent|rag|document|intelligen|automation|workflow|support)/.test(ql)) {
+      if (chunk.id === "service-ai") score += 8;
+      if (chunk.id.startsWith("ai-solution-")) score += 4;
+      if (chunk.id === "portfolio-ai-chatbot" || chunk.id === "portfolio-rag-app") score += 4;
+    }
+    if (/(data|dashboard|analytics|bi|forecast)/.test(ql)) {
+      if (chunk.id === "service-data") score += 8;
+      if (chunk.id === "portfolio-dashboard") score += 6;
+    }
+    if (/(cloud|devops|kubernetes|docker|aws|azure|gcp|infra)/.test(ql)) {
+      if (chunk.id === "service-cloud") score += 8;
+    }
+    if (/(contact|email|phone|consult|quote|price|cost|timeline|nda)/.test(ql)) {
+      if (chunk.id === "company-contact" || chunk.id === "contact-info") score += 8;
+      if (chunk.id === "company-timelines" || chunk.id === "company-nda") score += 6;
+    }
+    if (/(portfolio|project|case study|work)/.test(ql)) {
+      if (chunk.id === "portfolio-overview") score += 10;
+      if (chunk.id.startsWith("portfolio-")) score += 6;
+    }
+
     return { chunk, score };
   });
 
