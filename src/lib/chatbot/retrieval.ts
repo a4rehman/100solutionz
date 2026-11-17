@@ -22,19 +22,23 @@ export function searchWebsiteKnowledge(query: string, limit = 6): KnowledgeChunk
   const tokens = tokenize(query);
   if (tokens.length === 0) return [];
 
+  const q = query.toLowerCase();
   const scored = knowledgeIndex.map((chunk) => {
     const haystack = `${chunk.title} ${chunk.content} ${chunk.category}`.toLowerCase();
     let score = 0;
     for (const t of tokens) {
-      if (haystack.includes(t)) score += 2;
-      // title boost
+      // word-boundary-ish token match
+      const re = new RegExp(`\\b${t}\\b`, "i");
+      if (re.test(haystack)) score += 4;
+      else if (haystack.includes(t)) score += 1;
       if (chunk.title.toLowerCase().includes(t)) score += 3;
-      // category boost
       if (chunk.category.toLowerCase().includes(t)) score += 1;
     }
-    // phrase boost
-    const q = query.toLowerCase();
-    if (haystack.includes(q) && q.length > 4) score += 5;
+    if (haystack.includes(q) && q.length > 4) score += 6;
+    // Prefer overview chunks for broad queries
+    if (chunk.id.endsWith("overview") && tokens.length <= 4) score += 3;
+    // Penalize blog chunks unless blog explicitly asked
+    if (chunk.category === "blog" && !q.includes("blog") && !q.includes("article")) score -= 4;
     return { chunk, score };
   });
 

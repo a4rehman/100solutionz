@@ -10,6 +10,8 @@ const rateLimitMap = new Map<string, number[]>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS_PER_WINDOW = 20;
 
+let aiDisabledUntil = 0;
+
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
   const timestamps = rateLimitMap.get(ip) || [];
@@ -30,28 +32,38 @@ function buildFallbackAnswer(
 ): { answer: string; suggestions: string[] } {
   if (chunks.length === 0) {
     return {
-      answer:
-        "I don't have verified information about that on the 100Solutionz website. You can explore our services at /services, AI solutions at /ai-solutions, or contact our team at /contact for a detailed discussion.",
-      suggestions: ["Explore Our Services", "Explore AI Solutions", "Book a Consultation"],
+      answer: "I don't have verified information about that on the 100Solutionz website. I'd be happy to help with our services, AI solutions, portfolio, or process - or you can reach our team directly at /contact.",
+      suggestions: ["Explore Our Services", "Explore AI Solutions", "Show Our Portfolio", "Book a Consultation"],
     };
   }
 
-  const lines = chunks.map((c) => `- ${c.title}: ${c.content.slice(0, 220)}${c.content.length > 220 ? "…" : ""}`);
-  const answer = [
-    "Here is what I found on the 100Solutionz website:",
-    "",
-    ...lines,
-    "",
-    "You can explore the linked pages for more detail, or ask me a follow-up question.",
-  ].join("\n");
+  const top = chunks[0];
+  const rest = chunks.slice(1);
 
-  const suggestions = [
-    "Tell me more about AI services",
-    "Show me your portfolio",
-    "How can I start a project?",
-  ];
+  const lines: string[] = [];
+  lines.push("Here's what I found on the 100Solutionz website:");
+  lines.push("");
+  lines.push("**" + top.title + "**");
+  lines.push(top.content.length > 420 ? top.content.slice(0, 420) + "..." : top.content);
+  if (rest.length > 0) {
+    lines.push("");
+    lines.push("You might also find these helpful:");
+    for (const c of rest) {
+      lines.push("- " + c.title + " - " + (c.content.length > 140 ? c.content.slice(0, 140) + "..." : c.content));
+    }
+  }
+  lines.push("");
+  lines.push("Would you like more detail on any of these, or help choosing the right service for your project?");
 
-  return { answer, suggestions };
+  const suggestions: string[] = [];
+  const cats = new Set(chunks.map((c) => c.category));
+  if (cats.has("services")) suggestions.push("Tell me about AI services");
+  if (cats.has("portfolio")) suggestions.push("Show Our Portfolio");
+  if (cats.has("ai-solutions")) suggestions.push("Explore AI Solutions");
+  if (suggestions.length === 0) suggestions.push("How can I start a project?");
+  suggestions.push("Book a Consultation");
+
+  return { answer: lines.join("\n"), suggestions: Array.from(new Set(suggestions)).slice(0, 4) };
 }
 
 export async function POST(req: NextRequest) {
@@ -92,7 +104,7 @@ export async function POST(req: NextRequest) {
     const serverHistory = getConversation(conversationId);
     const combinedHistory = serverHistory.length > 0 ? serverHistory : history;
 
-    const chunks = searchWebsiteKnowledge(message, 6);
+    const chunks = searchWebsiteKnowledge(message, 4);
     const sources = getSources(chunks);
     const contextText = chunks.map((c) => `[${c.title}] (${c.url})\n${c.content}`).join("\n\n");
 
@@ -100,7 +112,8 @@ export async function POST(req: NextRequest) {
     let mode: "ai" | "knowledge-search" = "knowledge-search";
     let suggestions: string[] = [];
 
-    if (isAIConfigured()) {
+    const aiAllowed = isAIConfigured() && Date.now() > aiDisabledUntil;
+    if (aiAllowed) {
       try {
         const systemPrompt = SYSTEM_PROMPT.replace("{context}", contextText || "No relevant website content found.");
         const result = await generateAIResponse(systemPrompt, combinedHistory, message);
@@ -108,6 +121,10 @@ export async function POST(req: NextRequest) {
         mode = result.mode;
         suggestions = ["Explore Our Services", "Show Our Portfolio", "Book a Consultation"];
       } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        if (msg.includes("429") || msg.includes("402") || msg.includes("401") || msg.includes("insufficient")) {
+          aiDisabledUntil = Date.now() + 10 * 60 * 1000;
+        }
         console.warn("AI provider failed, falling back to knowledge search:", err);
         const fb = buildFallbackAnswer(message, chunks);
         answer = fb.answer;

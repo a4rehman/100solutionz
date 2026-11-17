@@ -50,6 +50,17 @@ export function buildKnowledgeIndex(): KnowledgeChunk[] {
     chunk("company-support", "company", "Post-Launch Support", companyKnowledge.postLaunchSupport, "/about")
   );
 
+  // Services overview
+  chunks.push(
+    chunk(
+      "services-overview",
+      "services",
+      "Services Overview",
+      `100Solutionz offers five core service categories: ${servicesKnowledge.map((s) => s.label).join(", ")}. Each includes multiple sub-services and a defined technology stack. Explore details at /services.`,
+      "/services"
+    )
+  );
+
   // Services
   for (const s of servicesKnowledge) {
     chunks.push(
@@ -78,6 +89,17 @@ export function buildKnowledgeIndex(): KnowledgeChunk[] {
       chunks.push(chunk(`faq-${s.slug}-${f.question.slice(0, 20)}`, "faq", f.question, f.answer, s.url));
     }
   }
+
+  // Portfolio overview
+  chunks.push(
+    chunk(
+      "portfolio-overview",
+      "portfolio",
+      "Portfolio Overview",
+      `100Solutionz portfolio includes: ${portfolioKnowledge.map((p) => `${p.title} (${p.categoryLabel})`).join("; ")}. Explore case studies at /portfolio.`,
+      "/portfolio"
+    )
+  );
 
   // Portfolio
   for (const p of portfolioKnowledge) {

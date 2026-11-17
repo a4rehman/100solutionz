@@ -33,7 +33,7 @@ interface UIMessage {
 }
 
 const WELCOME_TEXT =
-  "Hi! I'm SolutionzAI 👋\n\nI'm your 100Solutionz assistant. I can help you explore our services, AI solutions, projects, and answer questions about working with our team.";
+  "Hi! I'm SolutionzAI 👋\n\nI'm your 100Solutionz assistant. I can help you explore our services, AI solutions, projects, and answer questions about working with our team.\n\nI answer using verified information from the 100Solutionz website.";
 
 const INITIAL_SUGGESTIONS = [
   "Explore Our Services",
@@ -396,7 +396,7 @@ export default function ChatWidget() {
               role="log"
               aria-live="polite"
               aria-relevant="additions"
-              className="flex-1 p-4 overflow-y-auto flex flex-col gap-3 text-xs bg-[var(--background)]"
+              className="flex-1 p-4 overflow-y-auto flex flex-col gap-3 text-sm bg-[var(--background)]"
             >
               {messages.map((m) => (
                 <div key={m.id} className={`flex flex-col gap-1.5 max-w-[88%] ${m.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"}`}>
@@ -588,7 +588,7 @@ export default function ChatWidget() {
                 placeholder="Ask about our AI & software services..."
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className="flex-1 bg-[var(--surface)] border border-[var(--input-border)] px-3 py-2 text-xs rounded-lg text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
+                className="flex-1 bg-[var(--surface)] border border-[var(--input-border)] px-3 py-2 text-sm rounded-lg text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-1 focus:ring-[var(--secondary-accent)] cursor-text"
                 aria-label="Message to assistant"
                 disabled={isTyping}
               />
